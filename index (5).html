@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-IgL6qdSg6YBM34xA1RLBDvDsn72xf1KKwnwUNJA2ihE='; style-src 'sha256-ATGGrB6VUZywVT8txP3a3rfC5kwW8avuaQXsqmh1Ctc='; img-src 'self' data: blob:; connect-src 'self'; font-src 'none'; object-src 'none'; media-src 'none'; frame-src 'none'; worker-src 'none'; manifest-src 'none'; form-action 'none'; base-uri 'none'; require-trusted-types-for 'script'; trusted-types 'none'">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Balance âgée clients, KPI de recouvrement (DSO, CEI) et relances automatisées conformes à la loi 69-21 – traitement 100 % local.">
+<meta name="theme-color" content="#4f46e5">
+<title>Balance âgée clients & relances – Recouvrement</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%234f46e5'/%3E%3Cstop offset='1' stop-color='%23db2777'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='9' fill='url(%23g)'/%3E%3Cpath d='M8 22V14M13 22V10M18 22V16M23 22V7' stroke='white' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
+<style>
+:root{
+  --bg:#f6f7fb;--surface:#ffffff;--surface-2:#f1f3fa;--border:#e4e7f2;--text:#141a2e;--muted:#5f6883;
+  --p1:#4f46e5;--p2:#7c3aed;--p3:#db2777;--accent:#06b6d4;
+  --grad:linear-gradient(120deg,#4f46e5 0%,#7c3aed 45%,#db2777 100%);
+  --ok:#059669;--ok-bg:#d1fae5;--ko:#dc2626;--ko-bg:#fee2e2;--warn:#d97706;--warn-bg:#fef3c7;--info:#4f46e5;--info-bg:#e0e7ff;
+  --b0:#10b981;--b1:#84cc16;--b2:#eab308;--b3:#f97316;--b4:#ef4444;--b5:#db2777;--b6:#9333ea;--b7:#4c1d95;
+  --shadow:0 1px 2px rgba(20,26,46,.04),0 8px 24px rgba(79,70,229,.08);--shadow-lg:0 20px 50px rgba(79,70,229,.18);
+  --radius:16px;--font:"Inter","Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;--mono:ui-monospace,"SF Mono",Consolas,monospace;
+}
+[data-theme="dark"]{
+  --bg:#0b0f1d;--surface:#121829;--surface-2:#1a2238;--border:#273049;--text:#e8ecf7;--muted:#9aa5c2;
+  --ok:#34d399;--ok-bg:#0f2f25;--ko:#f87171;--ko-bg:#3b1515;--warn:#fbbf24;--warn-bg:#3a2a0b;--info:#a5b4fc;--info-bg:#1e2350;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35);--shadow-lg:0 20px 50px rgba(0,0,0,.5);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.framed body{display:none}
+a{color:var(--p1)}
+[data-theme="dark"] a{color:#a5b4fc}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:8px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:absolute;left:-999px;top:8px;background:var(--p1);color:#fff;padding:8px 12px;border-radius:8px;z-index:100}
+.skip:focus{left:8px}
+[hidden]{display:none!important}
+
+/* ---------- Barre supérieure ---------- */
+.topbar{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--surface) 85%,transparent);backdrop-filter:saturate(1.4) blur(12px);border-bottom:1px solid var(--border)}
+.topbar-in{max-width:1480px;margin:0 auto;padding:10px 24px;display:flex;align-items:center;gap:14px}
+.brand{display:flex;align-items:center;gap:12px;min-width:0}
+.logo{width:40px;height:40px;border-radius:12px;background:var(--grad);display:grid;place-items:center;flex:none;box-shadow:0 6px 18px rgba(124,58,237,.35)}
+.brand h1{font-size:16px;margin:0;white-space:nowrap;letter-spacing:-.2px}
+.brand p{margin:0;color:var(--muted);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:420px}
+.spacer{flex:1}
+.actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--border);background:var(--surface);padding:8px 14px;border-radius:11px;cursor:pointer;font-weight:650;font-size:13px;transition:transform .08s,box-shadow .15s,background .15s;text-decoration:none;color:var(--text);white-space:nowrap}
+.btn:hover{background:var(--surface-2)}
+.btn:active{transform:translateY(1px)}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.btn-grad{background:var(--grad);border:0;color:#fff;box-shadow:0 6px 18px rgba(124,58,237,.3)}
+.btn-grad:hover{background:var(--grad);filter:brightness(1.07);box-shadow:0 10px 26px rgba(124,58,237,.38)}
+.btn-ghost{border-color:transparent;background:transparent}
+.btn-sm{padding:6px 10px;font-size:12px;border-radius:9px}
+.ico{width:16px;height:16px;flex:none}
+.asof{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);background:var(--surface-2);border:1px solid var(--border);border-radius:11px;padding:4px 6px 4px 10px}
+.asof input{border:0;background:transparent;font-weight:700;color:var(--text);font-size:13px}
+main{max-width:1480px;margin:0 auto;padding:22px 24px}
+
+/* ---------- Hero ---------- */
+.hero{position:relative;overflow:hidden;border-radius:24px;background:var(--grad);color:#fff;padding:34px 36px;box-shadow:var(--shadow-lg);margin-bottom:22px;display:grid;grid-template-columns:1.25fr 1fr;gap:28px;align-items:center}
+.hero::before,.hero::after{content:"";position:absolute;border-radius:50%;filter:blur(2px);opacity:.25;background:#fff}
+.hero::before{width:380px;height:380px;right:-120px;top:-160px}
+.hero::after{width:220px;height:220px;left:38%;bottom:-140px;opacity:.15}
+.hero h2{font-size:30px;line-height:1.15;margin:0 0 10px;letter-spacing:-.6px}
+.hero p{margin:0 0 18px;opacity:.92;font-size:15px;max-width:620px}
+.hero .cta{display:flex;gap:10px;flex-wrap:wrap}
+.hero .btn-white{background:#fff;color:#3b2bb5;border:0;box-shadow:0 8px 20px rgba(0,0,0,.18)}
+.hero .btn-white:hover{background:#f5f3ff}
+.hero .btn-glass{background:rgba(255,255,255,.16);color:#fff;border:1px solid rgba(255,255,255,.4)}
+.hero .btn-glass:hover{background:rgba(255,255,255,.26)}
+.pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.pill-g{font-size:12px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);padding:4px 10px;border-radius:999px}
+.drop{position:relative;z-index:1;border:2px dashed rgba(255,255,255,.6);border-radius:20px;background:rgba(255,255,255,.1);padding:28px;text-align:center;cursor:pointer;transition:background .15s,transform .15s}
+.drop:hover,.drop.drag{background:rgba(255,255,255,.2);transform:translateY(-2px)}
+.drop input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.drop .big{width:64px;height:64px;border-radius:18px;background:rgba(255,255,255,.2);display:grid;place-items:center;margin:0 auto 12px}
+.drop b{display:block;font-size:17px;margin-bottom:4px}
+.drop small{opacity:.85}
+.hero.compact{grid-template-columns:1fr auto;padding:16px 22px;border-radius:18px}
+.hero.compact h2{font-size:18px;margin:0}
+.hero.compact p,.hero.compact .pills,.hero.compact .cta{display:none}
+.hero.compact .drop{padding:10px 18px;display:flex;align-items:center;gap:12px;text-align:left}
+.hero.compact .drop .big{width:36px;height:36px;margin:0;border-radius:10px}
+.hero.compact .drop small{display:none}
+.hero.compact .drop b{font-size:14px;margin:0}
+
+/* ---------- Progress / info ---------- */
+.progress{display:none;padding:16px 20px;margin-bottom:18px}
+.progress.show{display:block}
+.bar{height:6px;background:var(--surface-2);border-radius:999px;overflow:hidden;margin-top:10px}
+.bar>i{display:block;height:100%;width:30%;background:var(--grad);border-radius:999px;animation:load 1.1s ease-in-out infinite}
+@keyframes load{0%{transform:translateX(-100%)}100%{transform:translateX(340%)}}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+.fileinfo{display:none;padding:12px 16px;margin-bottom:18px;align-items:center;gap:10px;flex-wrap:wrap}
+.fileinfo.show{display:flex}
+.chip{display:inline-flex;align-items:center;gap:6px;background:var(--surface-2);border:1px solid var(--border);border-radius:999px;padding:4px 12px;font-size:12px;color:var(--muted)}
+.chip b{color:var(--text);font-weight:650}
+.banner{display:flex;gap:12px;align-items:center;padding:12px 16px;border-radius:14px;margin-bottom:16px;background:var(--warn-bg);color:var(--warn);font-weight:600;font-size:13px}
+.banner.info{background:var(--info-bg);color:var(--info)}
+
+/* ---------- Onglets ---------- */
+.tabs{display:none;gap:6px;margin-bottom:20px;overflow-x:auto;padding:6px;background:var(--surface);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow);scrollbar-width:thin}
+.tabs.show{display:flex}
+.tab{border:0;background:transparent;padding:9px 14px;cursor:pointer;font-weight:650;color:var(--muted);white-space:nowrap;display:flex;align-items:center;gap:8px;border-radius:11px;transition:background .15s,color .15s}
+.tab:hover{color:var(--text);background:var(--surface-2)}
+.tab[aria-selected="true"]{color:#fff;background:var(--grad);box-shadow:0 6px 16px rgba(124,58,237,.3)}
+.count{font-size:11px;padding:1px 7px;border-radius:999px;background:var(--surface-2);color:var(--muted);font-weight:800}
+.tab[aria-selected="true"] .count{background:rgba(255,255,255,.25);color:#fff}
+.count.ko{background:var(--ko-bg);color:var(--ko)}
+.panel{display:none}
+.panel.show{display:block;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.panel-head{display:flex;align-items:flex-end;gap:16px;margin-bottom:16px;flex-wrap:wrap}
+.panel-head h2{margin:0;font-size:22px;letter-spacing:-.3px}
+.panel-head p{margin:4px 0 0;color:var(--muted);max-width:900px}
+
+/* ---------- KPI ---------- */
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-bottom:18px}
+.kpi{position:relative;overflow:hidden;padding:18px 18px 16px}
+.kpi::before{content:"";position:absolute;inset:0 0 auto 0;height:4px;background:var(--c,var(--p1))}
+.kpi .top{display:flex;align-items:center;gap:10px}
+.kpi .ic{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:color-mix(in srgb,var(--c,var(--p1)) 14%,transparent);color:var(--c,var(--p1))}
+.kpi .l{color:var(--muted);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.4px}
+.kpi .v{font-size:26px;font-weight:800;margin-top:10px;font-variant-numeric:tabular-nums;letter-spacing:-.6px}
+.kpi .v small{font-size:14px;font-weight:700;color:var(--muted);margin-left:4px}
+.kpi .s{color:var(--muted);font-size:12px;margin-top:2px}
+.kpi.hero-k{background:var(--grad);color:#fff;border:0}
+.kpi.hero-k::before{display:none}
+.kpi.hero-k .l,.kpi.hero-k .s,.kpi.hero-k .v small{color:rgba(255,255,255,.85)}
+.kpi.hero-k .ic{background:rgba(255,255,255,.2);color:#fff}
+.trend{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:800;padding:2px 8px;border-radius:999px;margin-left:6px}
+.trend.up{background:var(--ko-bg);color:var(--ko)}
+.trend.down{background:var(--ok-bg);color:var(--ok)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px}
+.grid3{display:grid;grid-template-columns:1.1fr 1.9fr;gap:18px;margin-bottom:18px}
+.sec{padding:18px 20px}
+.sec h3{margin:0 0 4px;font-size:15px;display:flex;align-items:center;gap:8px}
+.sec .sub{color:var(--muted);font-size:12px;margin:0 0 12px}
+.chart svg{width:100%;height:auto;display:block}
+.chart text{fill:var(--muted);font-size:11px;font-family:var(--font)}
+.chart .lbl-strong{fill:var(--text);font-weight:800}
+.chart .grid{stroke:var(--border);stroke-width:1}
+.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-top:10px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;background:var(--c)}
+.donut-wrap{display:grid;grid-template-columns:200px 1fr;gap:18px;align-items:center}
+.blist{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.blist li{white-space:nowrap;display:grid;grid-template-columns:12px 1fr auto auto;gap:10px;align-items:center;font-size:13px}
+.blist i{width:12px;height:12px;border-radius:4px;background:var(--c)}
+.blist .pc{color:var(--muted);font-variant-numeric:tabular-nums;min-width:48px;text-align:right}
+.blist .am{font-weight:700;font-variant-numeric:tabular-nums}
+.insights{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.insights li{display:flex;gap:10px;padding:12px;border-radius:12px;background:var(--surface-2);font-size:13px}
+.insights .dot{width:26px;height:26px;border-radius:9px;display:grid;place-items:center;flex:none;font-weight:800;font-size:13px}
+.d-ko{background:var(--ko-bg);color:var(--ko)}.d-warn{background:var(--warn-bg);color:var(--warn)}.d-ok{background:var(--ok-bg);color:var(--ok)}.d-info{background:var(--info-bg);color:var(--info)}
+
+/* ---------- Tables ---------- */
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+.search{position:relative;flex:1;min-width:220px;max-width:360px}
+.search input{width:100%;padding:9px 12px 9px 34px;border:1px solid var(--border);border-radius:11px;background:var(--surface)}
+.search svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--muted)}
+.toolbar select{padding:8px 10px;border:1px solid var(--border);border-radius:11px;background:var(--surface)}
+.toolbar label.ck{display:flex;gap:6px;align-items:center;font-size:13px;color:var(--muted);cursor:pointer}
+.tablewrap{overflow:auto;max-height:72vh;border:1px solid var(--border);border-radius:14px;background:var(--surface)}
+table{border-collapse:separate;border-spacing:0;width:100%;font-size:13px}
+th,td{padding:8px 10px;border-bottom:1px solid var(--border);text-align:left;vertical-align:middle}
+th{position:sticky;top:0;background:var(--surface-2);font-weight:750;font-size:11.5px;color:var(--muted);z-index:2;white-space:nowrap;cursor:pointer;user-select:none;text-transform:uppercase;letter-spacing:.3px}
+th.nosort{cursor:default}
+th[aria-sort="ascending"]::after{content:" ▲";font-size:9px}
+th[aria-sort="descending"]::after{content:" ▼";font-size:9px}
+th.bk{color:#fff}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+td.wrap{min-width:240px;max-width:440px}
+td.nowrap{white-space:nowrap}
+td.mono{font-family:var(--mono);font-size:12px}
+tbody tr:hover td{background:color-mix(in srgb,var(--p1) 5%,var(--surface))}
+tr.tot td{font-weight:800;background:var(--surface-2);position:sticky;bottom:0;z-index:1}
+tr.sub td{background:var(--surface-2);font-size:12px}
+tr.clickable{cursor:pointer}
+td.heat{font-weight:650}
+.tablewrap tbody td:first-child{white-space:nowrap}
+.caret{display:inline-block;width:14px;transition:transform .15s;color:var(--muted)}
+tr.open .caret{transform:rotate(90deg)}
+.badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:800;padding:2px 9px;border-radius:999px;white-space:nowrap}
+.b-ok{background:var(--ok-bg);color:var(--ok)}.b-ko{background:var(--ko-bg);color:var(--ko)}.b-warn{background:var(--warn-bg);color:var(--warn)}.b-info{background:var(--info-bg);color:var(--info)}.b-mute{background:var(--surface-2);color:var(--muted)}
+.score{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:8px;font-weight:900;color:#fff;font-size:13px}
+.s-A{background:#10b981}.s-B{background:#84cc16}.s-C{background:#eab308}.s-D{background:#f97316}.s-E{background:#dc2626}
+.lvl{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:800;padding:3px 10px;border-radius:999px;color:#fff;white-space:nowrap}
+.l1{background:#0ea5e9}.l2{background:#f59e0b}.l3{background:#dc2626}.l4{background:#4c1d95}
+.foot{color:var(--muted);font-size:12px;margin-top:8px}
+.minibar{display:flex;height:8px;border-radius:999px;overflow:hidden;background:var(--surface-2);min-width:120px}
+.minibar i{display:block;height:100%}
+
+/* ---------- Relances ---------- */
+.rel{display:grid;grid-template-columns:400px 1fr;gap:18px;align-items:start}
+.rel-list{max-height:78vh;overflow:auto;padding:8px}
+.rel-item{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;padding:10px;border-radius:12px;cursor:pointer;border:1px solid transparent}
+.rel-item:hover{background:var(--surface-2)}
+.rel-item.active{border-color:var(--p2);background:color-mix(in srgb,var(--p2) 8%,var(--surface))}
+.rel-item .nm{font-weight:700;font-size:13px}
+.rel-item .meta{font-size:12px;color:var(--muted)}
+.rel-item .amt{font-weight:800;font-variant-numeric:tabular-nums;text-align:right}
+.rel-tools{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+.rel-tools select{padding:7px 10px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+.paper-wrap{background:var(--surface-2);border-radius:16px;padding:22px;overflow:auto;max-height:78vh}
+.letter{background:#fff;color:#1b1f2a;width:100%;max-width:820px;margin:0 auto;padding:46px 54px;border-radius:6px;box-shadow:0 10px 30px rgba(0,0,0,.12);font-family:Georgia,"Times New Roman",serif;font-size:13.5px;line-height:1.6}
+.letter .lh{display:flex;justify-content:space-between;gap:24px;margin-bottom:26px}
+.letter .co b{font-family:var(--font);font-size:17px;letter-spacing:.3px;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.letter .co div,.letter .to div{font-size:12px;color:#4b5563}
+.letter .to{text-align:left;min-width:240px;border-left:3px solid #7c3aed;padding-left:14px}
+.letter .to b{font-size:14px;color:#111}
+.letter .reco{display:table;font-family:var(--font);font-size:11px;font-weight:800;letter-spacing:.6px;color:#b91c1c;border:1.5px solid #b91c1c;padding:3px 10px;border-radius:4px;margin-bottom:12px}
+.letter .meta{font-size:12px;color:#4b5563;margin-bottom:6px}
+.letter .obj{font-weight:700;margin:14px 0 16px;font-family:var(--font)}
+.letter p{margin:0 0 11px;text-align:justify}
+.letter table{font-family:var(--font);font-size:12px;margin:10px 0 16px;border:1px solid #e5e7eb}
+.letter th{position:static;background:#f3f4f6;color:#374151;text-transform:none;letter-spacing:0;cursor:default;font-size:11.5px}
+.letter td,.letter th{border-bottom:1px solid #e5e7eb;padding:6px 8px}
+.letter tr.tot td{position:static;background:#f3f4f6}
+.letter .sig{margin-top:26px;text-align:right}
+.letter .fine{margin-top:28px;font-family:var(--font);font-size:10.5px;color:#6b7280;border-top:1px solid #e5e7eb;padding-top:8px}
+
+/* ---------- Paramètres ---------- */
+.form{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.field label{display:block;font-weight:700;font-size:12px;color:var(--muted);margin-bottom:5px}
+.field input,.field select{width:100%;padding:9px 11px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+.field small{display:block;color:var(--muted);font-size:11px;margin-top:3px}
+.field.span2{grid-column:span 2}
+.form-actions{margin-top:16px;display:flex;gap:10px;flex-wrap:wrap}
+.ctab input{width:100%;padding:6px 8px;border:1px solid var(--border);border-radius:8px;background:var(--surface);min-width:70px}
+.rules{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.rule{padding:16px;border-radius:14px;background:var(--surface-2)}
+.rule b{display:block;font-size:20px;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:4px}
+
+/* ---------- Empty ---------- */
+.empty{text-align:center;padding:40px 24px 10px;color:var(--muted)}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:8px}
+.step{padding:18px;text-align:left}
+.step .n{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:10px;background:var(--grad);color:#fff;font-weight:800;margin-bottom:10px}
+.step b{display:block;color:var(--text);margin-bottom:4px}
+
+.toasts{position:fixed;bottom:20px;right:20px;display:flex;flex-direction:column;gap:10px;z-index:60}
+.toast{background:var(--surface);border:1px solid var(--border);border-left:5px solid var(--p2);border-radius:12px;padding:12px 16px;box-shadow:var(--shadow-lg);max-width:420px;animation:fade .2s ease}
+.toast.err{border-left-color:var(--ko)}.toast.ok{border-left-color:var(--ok)}
+footer{max-width:1480px;margin:0 auto;padding:10px 24px 30px;color:var(--muted);font-size:12px}
+footer a{margin-left:6px}
+#print-area{display:none}
+
+@media (max-width:1180px){.kpis{grid-template-columns:repeat(2,1fr)}.grid2,.grid3,.hero,.rel{grid-template-columns:1fr}.form{grid-template-columns:repeat(2,1fr)}.steps{grid-template-columns:repeat(2,1fr)}.rules{grid-template-columns:1fr}}
+@media (max-width:640px){main{padding:14px}.topbar-in{padding:8px 14px;flex-wrap:wrap}.kpis{grid-template-columns:1fr}.form{grid-template-columns:1fr}.brand p{display:none}.hero{padding:24px}.hero h2{font-size:24px}.donut-wrap{grid-template-columns:1fr}.steps{grid-template-columns:1fr}.letter{padding:26px}.field.span2{grid-column:auto}.asof{order:5}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media print{
+  @page{size:A4;margin:14mm}
+  body{background:#fff}
+  .topbar,.hero,.tabs,.toolbar,.toasts,.progress,.skip,.rel-list,.rel-tools,.fileinfo,footer,.banner,#p-params{display:none!important}
+  .panel{display:block!important;break-before:page}
+  #p-dash{break-before:auto}
+  .card{box-shadow:none}
+  .tablewrap,.paper-wrap{max-height:none;overflow:visible}
+  th{position:static}
+  body.printing-letters main,body.printing-letters footer{display:none!important}
+  body.printing-letters #print-area{display:block}
+  #print-area .letter{box-shadow:none;max-width:none;padding:0;break-after:page}
+  #print-area .letter:last-child{break-after:auto}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Aller au contenu</a>
+<header class="topbar">
+  <div class="topbar-in">
+    <div class="brand">
+      <div class="logo" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round"><path d="M5 19v-6M10 19V9M15 19v-4M20 19V5"/></svg></div>
+      <div><h1>Balance âgée clients & relances</h1><p id="subtitle">Recouvrement · DSO · Loi 69-21 sur les délais de paiement</p></div>
+    </div>
+    <div class="spacer"></div>
+    <div class="actions">
+      <label class="asof" id="asof-box" hidden>Situation au <input type="date" id="asof" aria-label="Date d'analyse"></label>
+      <button class="btn btn-grad" id="btn-export" disabled><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 21h16"/></svg>Exporter Excel</button>
+      <button class="btn" id="btn-print" disabled><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9V3h12v6M6 18H4v-7h16v7h-2M8 14h8v7H8z"/></svg>Imprimer</button>
+      <button class="btn" id="btn-reset" disabled>Effacer</button>
+      <button class="btn btn-ghost" id="btn-theme" aria-label="Basculer le thème clair / sombre"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero" id="hero" aria-label="Chargement du grand livre">
+    <div>
+      <h2 id="hero-title">Pilotez vos encaissements clients en un coup d'œil</h2>
+      <p>Balance âgée, DSO, comportement de paiement, conformité à la loi 69-21 et lettres de relance générées automatiquement – directement à partir de votre grand livre.</p>
+      <div class="cta">
+        <button class="btn btn-white" id="btn-demo"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 3l14 9-14 9V3z"/></svg>Essayer avec la société de démonstration</button>
+        <a class="btn btn-glass" href="Grand_livre_exemple.xlsx" download>Télécharger le grand livre exemple</a>
+      </div>
+      <div class="pills"><span class="pill-g">🔒 Traitement 100 % local</span><span class="pill-g">⚡ Aucune installation</span><span class="pill-g">🇲🇦 Loi 69-21 · CGI</span><span class="pill-g">📄 Relances PDF, Word, email</span></div>
+    </div>
+    <div class="drop" id="drop">
+      <input type="file" id="file" accept=".xlsx,.xlsm,.csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,text/csv" aria-label="Choisir le fichier du grand livre">
+      <div class="big" aria-hidden="true"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M12 16V4m0 0-4 4m4-4 4 4M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg></div>
+      <b id="drop-title">Déposez votre grand livre ici</b>
+      <small>ou cliquez pour le choisir · .xlsx, .csv · 25 Mo max · feuille « Clients » facultative (délais, emails)</small>
+    </div>
+  </section>
+
+  <section class="card progress" id="progress" aria-live="polite"><b id="progress-txt">Lecture du fichier…</b><div class="bar"><i></i></div></section>
+  <section class="card fileinfo" id="fileinfo" aria-label="Informations sur le fichier chargé"></section>
+
+  <section id="empty">
+    <div class="steps">
+      <div class="card step"><span class="n">1</span><b>Chargez le grand livre</b>Export « grand livre global » avec lettrage, comptes 3421 / 3424.</div>
+      <div class="card step"><span class="n">2</span><b>Analysez l'encours</b>Balance âgée par échéance, DSO, CEI, scoring des clients.</div>
+      <div class="card step"><span class="n">3</span><b>Relancez</b>Lettres graduées (rappel, relance, mise en demeure) prêtes à envoyer.</div>
+      <div class="card step"><span class="n">4</span><b>Exportez</b>Classeur Excel complet, lettres en PDF ou Word.</div>
+    </div>
+  </section>
+
+  <nav class="tabs" id="tabs" role="tablist" aria-label="Feuilles d'analyse"></nav>
+  <section class="panel" id="p-dash" role="tabpanel" tabindex="0"></section>
+  <section class="panel" id="p-aged" role="tabpanel" tabindex="0"></section>
+  <section class="panel" id="p-items" role="tabpanel" tabindex="0"></section>
+  <section class="panel" id="p-behav" role="tabpanel" tabindex="0"></section>
+  <section class="panel" id="p-relances" role="tabpanel" tabindex="0"></section>
+  <section class="panel" id="p-law" role="tabpanel" tabindex="0"></section>
+  <section class="panel" id="p-prov" role="tabpanel" tabindex="0"></section>
+  <section class="panel" id="p-params" role="tabpanel" tabindex="0"></section>
+</main>
+<footer>Outil d'aide au recouvrement : les analyses et courriers sont à valider au regard des contrats, des pièces justificatives et des textes en vigueur. Traitement local, aucune donnée transmise.<a href="Grand_livre_exemple.xlsx" download>Grand livre exemple (société fictive)</a></footer>
+<div id="print-area" aria-hidden="true"></div>
+<div class="toasts" id="toasts" aria-live="assertive"></div>
+<div class="sr-only" id="live" aria-live="polite"></div>
+
+<script>
+'use strict';
+(() => {
+if (window.top !== window.self) { document.documentElement.classList.add('framed'); return; }
+const LIMITS = { fileBytes: 25 * 1024 * 1024, unzipBytes: 200 * 1024 * 1024, zipEntries: 5000, rows: 400000 };
+
+/* ============================ 1. Utilitaires ============================ */
+const $ = (s, r = document) => r.querySelector(s);
+function h(tag, attrs, ...kids) {
+  const el = document.createElement(tag);
+  if (attrs) for (const [k, v] of Object.entries(attrs)) {
+    if (v == null || v === false) continue;
+    if (k === 'class') el.className = v;
+    else if (k === 'text') el.textContent = v;
+    else if (k.startsWith('on') && typeof v === 'function') el.addEventListener(k.slice(2), v);
+    else el.setAttribute(k, v === true ? '' : String(v));
+  }
+  for (const k of kids.flat(Infinity)) { if (k == null || k === false) continue; el.append(k instanceof Node ? k : document.createTextNode(String(k))); }
+  return el;
+}
+const SVGNS = 'http://www.w3.org/2000/svg';
+function s(tag, attrs, ...kids) { const el = document.createElementNS(SVGNS, tag); for (const [k, v] of Object.entries(attrs || {})) if (v != null) el.setAttribute(k, String(v)); for (const k of kids.flat()) if (k != null) el.append(k instanceof Node ? k : document.createTextNode(String(k))); return el; }
+const clear = el => { while (el.firstChild) el.removeChild(el.firstChild); return el; };
+const NF = new Intl.NumberFormat('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const NF0 = new Intl.NumberFormat('fr-FR', { maximumFractionDigits: 0 });
+const r2 = x => Math.round((x + (x >= 0 ? 1 : -1) * 1e-9) * 100) / 100;
+const fmt = n => (n == null || n === '' || Number.isNaN(n)) ? '' : (Math.abs(n) < 0.005 ? '–' : NF.format(n));
+const fmt0 = n => (n == null || !isFinite(n)) ? '' : NF0.format(n);
+const fmtK = n => { const a = Math.abs(n); return a >= 1e6 ? (n / 1e6).toFixed(2).replace('.', ',') + ' M' : a >= 1e3 ? NF0.format(n / 1e3) + ' k' : NF0.format(n); };
+const fmtP = (n, d = 1) => (n == null || !isFinite(n)) ? '' : (n * 100).toFixed(d).replace('.', ',') + ' %';
+const fmtD = iso => iso ? `${iso.slice(8, 10)}/${iso.slice(5, 7)}/${iso.slice(0, 4)}` : '';
+const sum = (arr, f) => arr.reduce((t, x) => t + (f ? f(x) : x), 0);
+const sw = (a, p) => !!a && !!p && String(a).startsWith(p);
+const swAny = (a, list) => list.some(p => sw(a, p));
+const norm = x => String(x ?? '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]/g, '');
+const DAY = 86400000;
+const isoToMs = iso => Date.UTC(+iso.slice(0, 4), +iso.slice(5, 7) - 1, +iso.slice(8, 10));
+const msToIso = ms => new Date(ms).toISOString().slice(0, 10);
+const addDays = (iso, n) => msToIso(isoToMs(iso) + n * DAY);
+const diffDays = (a, b) => Math.round((isoToMs(a) - isoToMs(b)) / DAY);
+const todayIso = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; };
+const MONTHS = ['janv.', 'févr.', 'mars', 'avr.', 'mai', 'juin', 'juil.', 'août', 'sept.', 'oct.', 'nov.', 'déc.'];
+function toast(msg, kind = '') { const t = h('div', { class: 'toast ' + kind, role: kind === 'err' ? 'alert' : 'status' }, msg); $('#toasts').append(t); setTimeout(() => t.remove(), kind === 'err' ? 9000 : 4200); }
+const announce = m => { $('#live').textContent = m; };
+
+/* ============================ 2. Lecture XLSX native ============================ */
+async function inflateRaw(u8, max) {
+  if (typeof DecompressionStream === 'undefined') throw new Error('Navigateur trop ancien : utilisez une version récente de Chrome, Edge, Firefox ou Safari.');
+  const reader = new Blob([u8]).stream().pipeThrough(new DecompressionStream('deflate-raw')).getReader();
+  const chunks = []; let total = 0;
+  for (;;) { const { done, value } = await reader.read(); if (done) break; total += value.length; if (total > max) { try { await reader.cancel(); } catch (_) {} throw new Error('Contenu décompressé trop volumineux : fichier refusé.'); } chunks.push(value); }
+  const out = new Uint8Array(total); let o = 0; for (const c of chunks) { out.set(c, o); o += c.length; } return out;
+}
+async function openZip(buf) {
+  const u8 = new Uint8Array(buf), dv = new DataView(buf);
+  if (u8.length < 22 || dv.getUint32(0, true) !== 0x04034b50) throw new Error("Ce fichier n'est pas un classeur Excel .xlsx valide. Un ancien .xls doit être réenregistré en .xlsx.");
+  let eocd = -1; for (let i = u8.length - 22; i >= Math.max(0, u8.length - 65557); i--) if (dv.getUint32(i, true) === 0x06054b50) { eocd = i; break; }
+  if (eocd < 0) throw new Error('Archive Excel corrompue.');
+  const n = dv.getUint16(eocd + 10, true), cdOff = dv.getUint32(eocd + 16, true);
+  if (n > LIMITS.zipEntries || cdOff === 0xFFFFFFFF || cdOff >= u8.length) throw new Error('Structure de classeur non prise en charge.');
+  const entries = new Map(); let p = cdOff; const td = new TextDecoder();
+  for (let i = 0; i < n; i++) {
+    if (p + 46 > u8.length || dv.getUint32(p, true) !== 0x02014b50) throw new Error('Archive Excel corrompue (répertoire).');
+    const method = dv.getUint16(p + 10, true), csize = dv.getUint32(p + 20, true), nl = dv.getUint16(p + 28, true), el = dv.getUint16(p + 30, true), cl = dv.getUint16(p + 32, true), loff = dv.getUint32(p + 42, true);
+    entries.set(td.decode(u8.subarray(p + 46, p + 46 + nl)), { method, csize, loff }); p += 46 + nl + el + cl;
+  }
+  let budget = LIMITS.unzipBytes;
+  return { async text(name) {
+    const e = entries.get(name); if (!e) return null; const l = e.loff;
+    if (l + 30 > u8.length || dv.getUint32(l, true) !== 0x04034b50) throw new Error('Archive Excel corrompue (entrée).');
+    const start = l + 30 + dv.getUint16(l + 26, true) + dv.getUint16(l + 28, true);
+    if (start + e.csize > u8.length) throw new Error('Archive Excel tronquée.');
+    const data = u8.subarray(start, start + e.csize); let out;
+    if (e.method === 0) out = data; else if (e.method === 8) out = await inflateRaw(data, budget); else throw new Error('Méthode de compression non prise en charge.');
+    budget -= out.length; if (budget < 0) throw new Error('Contenu décompressé trop volumineux : fichier refusé.');
+    return new TextDecoder('utf-8').decode(out);
+  } };
+}
+const ENT = { lt: '<', gt: '>', amp: '&', quot: '"', apos: "'" };
+function decodeXml(x) {
+  return x.replace(/&(#x[0-9a-f]+|#\d+|lt|gt|amp|quot|apos);/gi, (m, g) => { if (g[0] === '#') { const cp = g[1] === 'x' || g[1] === 'X' ? parseInt(g.slice(2), 16) : parseInt(g.slice(1), 10); return cp > 0 && cp < 0x110000 ? String.fromCodePoint(cp) : ''; } return ENT[g.toLowerCase()] ?? m; })
+    .replace(/_x([0-9A-F]{4})_/g, (m, x2) => String.fromCharCode(parseInt(x2, 16)));
+}
+function attr(x, name) { const m = x.match(new RegExp('(?:^|\\s)' + name + '="([^"]*)"')); return m ? decodeXml(m[1]) : null; }
+function colIndex(ref) { let n = 0; for (const ch of ref) { const c = ch.charCodeAt(0); if (c < 65 || c > 90) break; n = n * 26 + (c - 64); } return n - 1; }
+function parseSheetXml(xml, sst) {
+  const rows = []; let seq = 0;
+  const reRow = /<row\b([^>]*?)\/>|<row\b([^>]*)>([\s\S]*?)<\/row>/g, reCell = /<c\b([^>]*?)\/>|<c\b([^>]*)>([\s\S]*?)<\/c>/g; let m;
+  while ((m = reRow.exec(xml))) {
+    const a = m[1] ?? m[2] ?? ''; const rA = attr(a, 'r'); const ri = rA ? parseInt(rA, 10) - 1 : seq; seq = ri + 1;
+    if (ri >= LIMITS.rows) throw new Error('Fichier trop volumineux (plus de ' + LIMITS.rows + ' lignes).');
+    const row = []; const body = m[3] || ''; let c, cseq = 0; reCell.lastIndex = 0;
+    while ((c = reCell.exec(body))) {
+      const ca = c[1] ?? c[2] ?? '', inner = c[3] || ''; const ref = attr(ca, 'r'); const ci = ref ? colIndex(ref) : cseq; cseq = ci + 1;
+      if (ci < 0 || ci > 200) continue;
+      const t = attr(ca, 't'); const vm = inner.match(/<v>([\s\S]*?)<\/v>/); const v = vm ? vm[1] : null; let val = null;
+      if (t === 's') val = v != null ? (sst[parseInt(v, 10)] ?? '') : null;
+      else if (t === 'inlineStr') { let st = ''; for (const tm of inner.matchAll(/<t\b[^>]*>([\s\S]*?)<\/t>/g)) st += tm[1]; val = decodeXml(st); }
+      else if (t === 'str') val = v != null ? decodeXml(v) : null;
+      else if (t === 'b') val = v === '1'; else if (t === 'e') val = null;
+      else if (v != null) { const num = parseFloat(v); val = Number.isFinite(num) ? num : decodeXml(v); }
+      row[ci] = val;
+    }
+    rows[ri] = row;
+  }
+  for (let i = 0; i < rows.length; i++) if (!rows[i]) rows[i] = [];
+  return rows;
+}
+async function readXlsx(buf) {
+  const z = await openZip(buf);
+  const wbx = await z.text('xl/workbook.xml'); if (!wbx) throw new Error('Classeur Excel invalide (workbook.xml absent).');
+  const rels = (await z.text('xl/_rels/workbook.xml.rels')) || ''; const relMap = {};
+  for (const m of rels.matchAll(/<Relationship\b([^>]*?)\/?>/g)) relMap[attr(m[1], 'Id')] = attr(m[1], 'Target');
+  const sst = []; const ss = await z.text('xl/sharedStrings.xml');
+  if (ss) for (const m of ss.matchAll(/<si\b[^>]*\/>|<si\b[^>]*>([\s\S]*?)<\/si>/g)) { const inner = (m[1] || '').replace(/<rPh\b[\s\S]*?<\/rPh>/g, ''); let t = ''; for (const tm of inner.matchAll(/<t\b[^>]*>([\s\S]*?)<\/t>/g)) t += tm[1]; sst.push(decodeXml(t)); }
+  const sheets = [...wbx.matchAll(/<sheet\b([^>]*?)\/?>/g)].map(m => ({ name: attr(m[1], 'name'), rid: attr(m[1], 'r:id') }));
+  if (!sheets.length) throw new Error('Aucune feuille trouvée dans le classeur.');
+  const out = [];
+  for (const sh of sheets.slice(0, 30)) {
+    const t = relMap[sh.rid]; if (!t) continue;
+    const path = t.startsWith('/') ? t.slice(1) : 'xl/' + t.replace(/^\.\//, '');
+    const xml = await z.text(path); if (!xml) continue;
+    out.push({ name: sh.name, rows: parseSheetXml(xml, sst) });
+  }
+  return out;
+}
+function readCsv(buf) {
+  let text = new TextDecoder('utf-8').decode(buf); if (text.includes('�')) text = new TextDecoder('windows-1252').decode(buf);
+  text = text.replace(/^﻿/, ''); const nl = text.indexOf('\n'); const first = text.slice(0, nl > 0 ? nl : text.length);
+  const delim = first.split(';').length >= first.split(',').length ? ';' : ','; const rows = []; let row = [], cell = '', q = false;
+  for (let i = 0; i < text.length; i++) {
+    const ch = text[i];
+    if (q) { if (ch === '"') { if (text[i + 1] === '"') { cell += '"'; i++; } else q = false; } else cell += ch; }
+    else if (ch === '"') q = true; else if (ch === delim) { row.push(cell); cell = ''; }
+    else if (ch === '\n' || ch === '\r') { if (ch === '\r' && text[i + 1] === '\n') i++; row.push(cell); rows.push(row); row = []; cell = ''; if (rows.length > LIMITS.rows) throw new Error('Fichier trop volumineux.'); }
+    else cell += ch;
+  }
+  if (cell || row.length) { row.push(cell); rows.push(row); }
+  return [{ name: 'CSV', rows: rows.map(r => r.map(v => v === '' ? null : v)) }];
+}
+
+/* ============================ 3. Grand livre ============================ */
+function findHeader(rows) { for (let i = 0; i < Math.min(rows.length, 60); i++) { const n = (rows[i] || []).map(norm); if (n.includes('date') && n.some(x => x.includes('debit')) && n.some(x => x.includes('credit'))) return i; } return -1; }
+function toISOfromFR(x) { const m = String(x).match(/(\d{1,2})[\/.-](\d{1,2})[\/.-](\d{4}|\d{2})(?!\d)/); if (!m) return null; let y = +m[3]; if (y < 100) y += 2000; const d = +m[1], mo = +m[2]; if (mo < 1 || mo > 12 || d < 1 || d > 31) return null; return `${y}-${String(mo).padStart(2, '0')}-${String(d).padStart(2, '0')}`; }
+function toISO(v) { if (v == null || v === '') return null; if (typeof v === 'number') { if (v < 20000 || v > 80000) return null; return msToIso(Date.UTC(1899, 11, 30) + Math.round(v) * DAY); } const t = String(v).trim(); return /^\d{1,2}[\/.-]\d{1,2}[\/.-]\d{2,4}$/.test(t) ? toISOfromFR(t) : null; }
+function num(v) { if (v == null || v === '') return 0; if (typeof v === 'number') return v; const t = String(v).replace(/[\s  ]/g, '').replace(/,(?=\d{1,2}$)/, '.').replace(/,/g, ''); const n = parseFloat(t); return Number.isFinite(n) ? n : 0; }
+const str = v => v == null ? '' : String(v).trim();
+
+function parseGL(rows) {
+  const hi = findHeader(rows);
+  if (hi < 0) throw new Error("En-tête du grand livre introuvable : le fichier doit contenir les colonnes « Date », « Débit » et « Crédit ».");
+  const hn = rows[hi].map(norm); const find = f => hn.findIndex(x => x && f(x));
+  const map = { date: find(x => x === 'date'), piece: find(x => x.includes('piece')), jnl: find(x => x === 'jr' || x.startsWith('journal') || x === 'jnl' || x === 'jl'), lib: find(x => x.startsWith('libelle')),
+    ref: find(x => x.startsWith('reference') || x === 'ref'), cp: find(x => x.includes('partie')), d: find(x => x.includes('debit')), c: find(x => x.includes('credit')), lett: find(x => x.startsWith('lettr')) };
+  for (const k of ['date', 'lib', 'd', 'c']) if (map[k] < 0) throw new Error('Colonne obligatoire manquante dans le grand livre : ' + k);
+  let periodStart = null, periodEnd = null, company = '';
+  for (let i = 0; i <= hi; i++) { const j = (rows[i] || []).map(str).join(' '); const m = j.match(/p[ée]riode\s+du\s+(\d{1,2}\/\d{1,2}\/\d{4})\s+au\s+(\d{1,2}\/\d{1,2}\/\d{4})/i); if (m) { periodStart = toISOfromFR(m[1]); periodEnd = toISOfromFR(m[2]); } }
+  const accounts = new Map(), entries = [], totals = new Map(); let cur = null; const g = (r, k) => map[k] >= 0 ? r[map[k]] : null;
+  for (let i = hi + 1; i < rows.length; i++) {
+    const r = rows[i] || []; const c0 = r[0]; const iso = toISO(g(r, 'date'));
+    if (iso && cur) {
+      const lib = str(g(r, 'lib'));
+      const e = { id: entries.length, acct: cur, date: iso, piece: str(g(r, 'piece')), jnl: str(g(r, 'jnl')), lib, ref: str(g(r, 'ref')), cp: str(g(r, 'cp')).replace(/\s/g, ''), d: r2(num(g(r, 'd'))), c: r2(num(g(r, 'c'))), lettre: str(g(r, 'lett')) };
+      e.isAN = e.jnl === '00' || /^a\s*nouveau/i.test(lib);
+      if (e.d || e.c) entries.push(e); continue;
+    }
+    if (typeof c0 === 'string') {
+      const t = c0.trim(); let m;
+      if ((m = t.match(/^TOTAL\s+COMPTE\s+(\d{4,12})/i))) { totals.set(m[1], { d: r2(num(r[map.d])), c: r2(num(r[map.c])) }); continue; }
+      if (/^(MVTS|TOTAL|SOUS)/i.test(t)) continue;
+      if ((m = t.match(/^(\d{4,12})\s+(.+)$/))) { cur = m[1]; if (!accounts.has(cur)) accounts.set(cur, m[2].replace(/^[-\s]+/, '').trim()); }
+    }
+  }
+  if (!entries.length) throw new Error('Aucune écriture reconnue dans le grand livre.');
+  const ds = entries.filter(e => !e.isAN).map(e => e.date).sort();
+  periodStart = periodStart || entries.find(e => e.isAN)?.date || ds[0]; periodEnd = periodEnd || ds[ds.length - 1];
+  return { accounts, entries, totals, periodStart, periodEnd, company };
+}
+function parseClientsSheet(sheets) {
+  const meta = new Map();
+  for (const sh of sheets) {
+    for (let i = 0; i < Math.min(sh.rows.length, 15); i++) {
+      const hn = (sh.rows[i] || []).map(norm);
+      const iA = hn.findIndex(x => x.startsWith('compte')), iD = hn.findIndex(x => x.startsWith('delai'));
+      if (iA < 0 || iD < 0) continue;
+      const iE = hn.findIndex(x => x.includes('mail')), iN = hn.findIndex(x => x.startsWith('client') || x.startsWith('nom') || x.startsWith('raison')), iV = hn.findIndex(x => x.startsWith('ville')), iC = hn.findIndex(x => x.startsWith('interlocuteur') || x.startsWith('contact'));
+      for (let j = i + 1; j < sh.rows.length; j++) {
+        const r = sh.rows[j] || []; const a = str(r[iA]).replace(/\s/g, ''); if (!/^\d{4,12}$/.test(a)) continue;
+        const dl = Math.round(num(r[iD]));
+        meta.set(a, { terms: dl > 0 && dl < 1000 ? dl : null, email: iE >= 0 ? str(r[iE]).slice(0, 120) : '', name: iN >= 0 ? str(r[iN]).slice(0, 120) : '', city: iV >= 0 ? str(r[iV]).slice(0, 60) : '', contact: iC >= 0 ? str(r[iC]).slice(0, 80) : '' });
+      }
+      break;
+    }
+  }
+  return meta;
+}
+
+/* ============================ 4. Moteur d'analyse ============================ */
+const DEFAULT_CFG = {
+  asOf: '', basis: 'due', defTerms: 60, legalMax: 120, td: 2.25, majo: 0.85, lawStart: '2025-01-01', tva: 20,
+  minRelance: 1000, n2: 30, n3: 60, contentieux: 120, prov181: 25, prov365: 50, provDoubt: 100,
+  p: { clients: '3421', douteux: '3424', effets: '3425', avances: '4421', provision: '3942', banque: '514,516,511,554' }
+};
+const EMPTY_CO = { name: '', addr: '', city: '', ice: '', rc: '', ifisc: '', tel: '', email: '', sign: '', role: '', rib: '' };
+const DEMO_CO = { name: 'ZENITH NÉGOCE SARL', addr: '120, boulevard de l\'Exemple – 20000', city: 'Casablanca', ice: '009999999000099 (fictif)', rc: '999999 (fictif)', ifisc: '99999999 (fictif)', tel: '+212 5 22 00 00 00', email: 'recouvrement@zenith-negoce.example', sign: 'Samira EL FICTIF', role: 'Responsable Crédit Clients', rib: '000 780 0000000000000000 00 – Banca Fictiva (fictif)' };
+const BUCKETS_DUE = [
+  { k: 'nd', l: 'Non échu', c: '#10b981', max: 0 }, { k: 'b1', l: '1–30 j', c: '#84cc16', max: 30 }, { k: 'b2', l: '31–60 j', c: '#eab308', max: 60 }, { k: 'b3', l: '61–90 j', c: '#f97316', max: 90 },
+  { k: 'b4', l: '91–120 j', c: '#ef4444', max: 120 }, { k: 'b5', l: '121–180 j', c: '#db2777', max: 180 }, { k: 'b6', l: '181–365 j', c: '#9333ea', max: 365 }, { k: 'b7', l: '> 365 j', c: '#4c1d95', max: Infinity }];
+const BUCKETS_INV = [
+  { k: 'nd', l: '0–30 j', c: '#10b981', max: 30 }, { k: 'b1', l: '31–60 j', c: '#84cc16', max: 60 }, { k: 'b2', l: '61–90 j', c: '#eab308', max: 90 }, { k: 'b3', l: '91–120 j', c: '#f97316', max: 120 },
+  { k: 'b4', l: '121–180 j', c: '#ef4444', max: 180 }, { k: 'b5', l: '181–270 j', c: '#db2777', max: 270 }, { k: 'b6', l: '271–365 j', c: '#9333ea', max: 365 }, { k: 'b7', l: '> 365 j', c: '#4c1d95', max: Infinity }];
+const LVL = { 1: { l: 'Rappel amiable', c: 'l1' }, 2: { l: 'Relance ferme', c: 'l2' }, 3: { l: 'Mise en demeure', c: 'l3' }, 4: { l: 'Contentieux', c: 'l4' } };
+
+function analyze(gl, meta, cfg) {
+  const P = cfg.p, bank = P.banque.split(',').map(x => x.trim()).filter(Boolean);
+  const asOf = cfg.asOf || gl.periodEnd; const start = gl.periodStart;
+  const BK = cfg.basis === 'inv' ? BUCKETS_INV : BUCKETS_DUE;
+  const isClient = a => sw(a, P.clients) || sw(a, P.douteux);
+  const E = gl.entries.filter(e => e.date <= asOf);
+  const byAcct = new Map(); for (const e of E) { if (!byAcct.has(e.acct)) byAcct.set(e.acct, []); byAcct.get(e.acct).push(e); }
+  const balOf = pre => r2(sum(E.filter(e => sw(e.acct, pre)), e => e.d - e.c));
+  const isSale = e => !e.isAN && e.d > 0 && !swAny(e.cp, bank) && !sw(e.cp, P.effets) && !isClient(e.cp);
+  const isAvoir = e => !e.isAN && e.c > 0 && sw(e.cp, '7');
+  const docDateOf = e => { if (e.isAN) { const m = e.lib.match(/(?:du|le|fact[^0-9]*\d*[^0-9]+)?\s(\d{1,2}\/\d{1,2}\/\d{4})/i); const d2 = m ? toISOfromFR(m[1]) : null; if (d2 && d2 < e.date) return { d: d2, glob: false }; return { d: e.date, glob: true }; } return { d: e.date, glob: false }; };
+  const clients = []; const items = []; const closedInv = [];
+  const lettCount = new Map(); for (const e of gl.entries) if (e.lettre && isClient(e.acct)) { const k = e.acct + '|' + e.lettre; lettCount.set(k, (lettCount.get(k) || 0) + 1); }
+  const maxDate = (a, b) => (a > b ? a : b);
+  for (const [acct, L0] of byAcct) {
+    if (!isClient(acct)) continue;
+    const m = meta.get(acct) || {}; const doubt = sw(acct, P.douteux);
+    const terms = m.terms || cfg.defTerms; const legalTerms = Math.min(terms, cfg.legalMax);
+    const name = m.name || gl.accounts.get(acct) || acct;
+    const L = L0.map(e => ({ ...e, ...(() => { const dd = docDateOf(e); return { doc: dd.d, glob: dd.glob }; })() }));
+    // Groupes de lettrage
+    const groups = new Map(); const open = [];
+    for (const e of L) { if (e.lettre) { if (!groups.has(e.lettre)) groups.set(e.lettre, []); groups.get(e.lettre).push(e); } else open.push(e); }
+    const openDeb = [], openCred = [];
+    for (const [lt, G] of groups) {
+      const net = r2(sum(G, e => e.d - e.c));
+      const fullyIn = (lettCount.get(acct + '|' + lt) || 0) === G.length;
+      if (Math.abs(net) < 0.01 && fullyIn) {
+        const deb = G.filter(e => e.d > 0), cre = G.filter(e => e.c > 0 && !isAvoir(e));
+        const pay = cre.length ? cre.map(e => e.date).sort().pop() : null;
+        if (pay) for (const d of deb) closedInv.push({ acct, name, doc: d.doc, amount: d.d, pay, terms, legalTerms, ref: d.ref, sale: isSale(d) || d.isAN });
+        continue;
+      }
+      if (net > 0) { const deb = G.filter(e => e.d > 0).sort((a, b) => a.doc.localeCompare(b.doc)); openDeb.push({ ...deb[0], amt: net, refs: deb.map(e => e.ref).filter(Boolean).join(' + '), partial: true }); }
+      else if (net < 0) openCred.push({ ...G.filter(e => e.c > 0).sort((a, b) => b.date.localeCompare(a.date))[0], amt: -net });
+    }
+    for (const e of open) { if (e.d > e.c) openDeb.push({ ...e, amt: r2(e.d - e.c), refs: e.ref }); else openCred.push({ ...e, amt: r2(e.c - e.d) }); }
+    openDeb.sort((a, b) => a.doc.localeCompare(b.doc) || a.id - b.id); openCred.sort((a, b) => a.date.localeCompare(b.date));
+    // Imputation FIFO des règlements non lettrés
+    let credPool = r2(sum(openCred, c => c.amt)); const fifoUsed = credPool > 0 && openDeb.length > 0;
+    const myItems = [];
+    for (const d of openDeb) {
+      let rem = d.amt; let fifo = 0;
+      if (credPool > 0) { fifo = Math.min(credPool, rem); rem = r2(rem - fifo); credPool = r2(credPool - fifo); }
+      if (rem <= 0.004) continue;
+      const due = addDays(d.doc, terms), legalDue = addDays(d.doc, legalTerms);
+      const od = diffDays(asOf, due), age = diffDays(asOf, d.doc), lod = diffDays(asOf, legalDue);
+      const key = cfg.basis === 'inv' ? age : od; const bk = BK.find(b => (cfg.basis === 'inv' ? key <= b.max : (b.max === 0 ? key <= 0 : key <= b.max))) || BK[BK.length - 1];
+      let amende = 0, rate = 0; if (lod > 0 && d.doc >= cfg.lawStart && !d.glob) { const months = Math.ceil(lod / 30); rate = cfg.td + cfg.majo * (months - 1); amende = r2(rem * rate / 100); }
+      const it = { acct, name, doubt, ref: d.refs || d.ref || d.piece, lib: d.lib, doc: d.doc, date: d.date, due, legalDue, amount: r2(rem), original: d.d || d.amt, fifo: r2(fifo), od, age, lod, bucket: bk.k, bucketL: bk.l, glob: d.glob, partial: !!d.partial || fifo > 0, amende, rate, terms };
+      myItems.push(it); items.push(it);
+    }
+    const unapplied = r2(credPool);
+    const total = r2(sum(myItems, i => i.amount) - unapplied);
+    const glBal = r2(sum(L, e => e.d - e.c));
+    const b = {}; for (const bk of BK) b[bk.k] = r2(sum(myItems.filter(i => i.bucket === bk.k), i => i.amount));
+    const overdueItems = myItems.filter(i => i.od > 0);
+    const overdue = r2(sum(overdueItems, i => i.amount));
+    const maxOd = overdueItems.length ? Math.max(...overdueItems.map(i => i.od)) : 0;
+    const wOd = overdue > 0 ? sum(overdueItems, i => i.od * i.amount) / overdue : 0;
+    const sales = r2(sum(L.filter(e => isSale(e) && e.date >= start), e => e.d)) - r2(sum(L.filter(e => isAvoir(e) && e.date >= start), e => e.c));
+    const myClosed = closedInv.filter(c => c.acct === acct && c.pay >= start);
+    const dmp = sum(myClosed, c => c.amount) > 0 ? sum(myClosed, c => diffDays(c.pay, c.doc) * c.amount) / sum(myClosed, c => c.amount) : null;
+    const onTime = sum(myClosed, c => c.amount) > 0 ? sum(myClosed.filter(c => diffDays(c.pay, c.doc) <= c.terms), c => c.amount) / sum(myClosed, c => c.amount) : null;
+    const pays = L.filter(e => e.c > 0 && (swAny(e.cp, bank) || sw(e.cp, P.effets))).map(e => e.date).sort();
+    const over60 = r2(sum(overdueItems.filter(i => i.od > 60), i => i.amount));
+    let score = 'A';
+    if (doubt || maxOd > 180) score = 'E'; else if (maxOd > 90 || (total > 0 && over60 / total > 0.4)) score = 'D'; else if (maxOd > 60) score = 'C'; else if (maxOd > 15 || (dmp != null && dmp > terms + 10)) score = 'B';
+    let level = 0; if (overdue >= cfg.minRelance) { level = maxOd >= cfg.n3 ? 3 : maxOd >= cfg.n2 ? 2 : maxOd >= 1 ? 1 : 0; if (doubt) level = 4; }
+    const amende = r2(sum(myItems, i => i.amende));
+    const ht = x => x / (1 + cfg.tva / 100);
+    const provSugg = r2(doubt ? ht(total) * cfg.provDoubt / 100 : sum(myItems, i => i.od > 365 ? ht(i.amount) * cfg.prov365 / 100 : i.od > 180 ? ht(i.amount) * cfg.prov181 / 100 : 0));
+    clients.push({ acct, name, doubt, terms, legalTerms, termsIllegal: terms > cfg.legalMax, email: m.email || '', contact: m.contact || '', city: m.city || '', items: myItems, unapplied, total, glBal, ecart: r2(total - glBal), b, overdue,
+      pctOverdue: total > 0 ? overdue / total : 0, maxOd, wOd, sales, dmp, onTime, lastPay: pays[pays.length - 1] || '', score, level, amende, provSugg, fifoUsed, over60, nbOpen: myItems.length,
+      globAN: myItems.some(i => i.glob) });
+  }
+  clients.sort((a, b) => b.total - a.total);
+  const encours = r2(sum(clients, c => c.total)); const overdue = r2(sum(clients, c => c.overdue)); const notDue = r2(encours - overdue);
+  const salesAll = r2(sum(clients, c => c.sales)); const days = diffDays(asOf, start) + 1;
+  // Ventes mensuelles (pour DSO par épuisement)
+  const monthKey = iso => iso.slice(0, 7);
+  const salesByMonth = new Map(); for (const e of E) if (isClient(e.acct) && (isSale(e) || isAvoir(e))) { const k = monthKey(e.date); salesByMonth.set(k, (salesByMonth.get(k) || 0) + (isSale(e) ? e.d : -e.c)); }
+  function countBack(rec, at) {
+    let rem = rec, dso = 0; let y = +at.slice(0, 4), mo = +at.slice(5, 7); let endDay = +at.slice(8, 10);
+    for (let k = 0; k < 36 && rem > 0.01; k++) {
+      const key = `${y}-${String(mo).padStart(2, '0')}`; const sm = salesByMonth.get(key) || 0; const dim = endDay;
+      if (sm <= 0) { dso += dim; } else if (rem > sm) { rem -= sm; dso += dim; } else { dso += rem / sm * dim; rem = 0; break; }
+      mo--; if (mo < 1) { mo = 12; y--; } endDay = new Date(Date.UTC(y, mo, 0)).getUTCDate();
+      if (`${y}-${String(mo).padStart(2, '0')}` < monthKey(start) && rem > 0.01) { const avg = salesAll / days; if (avg > 0) dso += rem / avg; rem = 0; break; }
+    }
+    return dso;
+  }
+  const dsoSimple = salesAll > 0 ? encours / salesAll * days : 0;
+  const dsoCB = countBack(encours, asOf);
+  const bpdso = salesAll > 0 ? notDue / salesAll * days : 0;
+  const anBal = r2(sum(gl.entries.filter(e => isClient(e.acct) && (e.isAN || e.date < start)), e => e.d - e.c));
+  const cei = (anBal + salesAll - notDue) > 0 ? (anBal + salesAll - encours) / (anBal + salesAll - notDue) : null;
+  const closedP = closedInv.filter(c => c.pay >= start);
+  const dmp = sum(closedP, c => c.amount) > 0 ? sum(closedP, c => diffDays(c.pay, c.doc) * c.amount) / sum(closedP, c => c.amount) : null;
+  const onTime = sum(closedP, c => c.amount) > 0 ? sum(closedP.filter(c => diffDays(c.pay, c.doc) <= c.terms), c => c.amount) / sum(closedP, c => c.amount) : null;
+  const avgTerms = salesAll > 0 ? sum(clients, c => c.terms * c.sales) / salesAll : cfg.defTerms;
+  // Séries mensuelles
+  const series = []; { let y = +start.slice(0, 4), mo = +start.slice(5, 7);
+    for (let k = 0; k < 36; k++) { const last = new Date(Date.UTC(y, mo, 0)).getUTCDate(); let me = `${y}-${String(mo).padStart(2, '0')}-${String(last).padStart(2, '0')}`; if (me > asOf) me = asOf;
+      const rec = r2(sum(gl.entries.filter(e => isClient(e.acct) && e.date <= me), e => e.d - e.c));
+      series.push({ m: `${MONTHS[mo - 1]} ${String(y).slice(2)}`, end: me, sales: r2(salesByMonth.get(`${y}-${String(mo).padStart(2, '0')}`) || 0), rec, dso: countBack(rec, me) });
+      if (me >= asOf) break; mo++; if (mo > 12) { mo = 1; y++; } } }
+  const B = {}; for (const bk of BK) B[bk.k] = r2(sum(clients, c => c.b[bk.k]));
+  const top5 = sum(clients.slice(0, 5), c => Math.max(0, c.total));
+  const effets = balOf(P.effets), avances = -balOf(P.avances), provision = -balOf(P.provision);
+  const glClients = r2(sum(E.filter(e => isClient(e.acct)), e => e.d - e.c));
+  const lateLegal = items.filter(i => i.lod > 0 && i.doc >= cfg.lawStart && !i.glob);
+  const paidLate = closedInv.filter(c => c.doc >= cfg.lawStart && diffDays(c.pay, c.doc) > c.legalTerms);
+  const prevDso = series.length > 1 ? series[series.length - 2].dso : null;
+  return { cfg, asOf, start, days, BK, clients, items, closedInv, encours, overdue, notDue, salesAll, dsoSimple, dsoCB, bpdso, add: dsoCB - bpdso, cei, dmp, onTime, avgTerms, series, B,
+    top5: encours > 0 ? top5 / encours : 0, effets, avances, provision, provSugg: r2(sum(clients, c => c.provSugg)), glClients, ecart: r2(encours - glClients), lateLegal, paidLate,
+    amende: r2(sum(items, i => i.amende)), illegalTerms: clients.filter(c => c.termsIllegal), prevDso,
+    toRelance: clients.filter(c => c.level > 0).sort((a, b) => b.level - a.level || b.overdue - a.overdue) };
+}
+
+/* ============================ 5. Lettres de relance ============================ */
+function letterModel(R, c, level, co, letterDate) {
+  const its = c.items.filter(i => i.od > 0).sort((a, b) => a.doc.localeCompare(b.doc));
+  const tot = r2(sum(its, i => i.amount)); const maxOd = its.length ? Math.max(...its.map(i => i.od)) : 0;
+  const beyondLegal = its.some(i => i.lod > 0 && !i.glob); const amende = r2(sum(its, i => i.amende));
+  const T = v => v || '[à compléter dans Paramètres]';
+  const rib = T(co.rib);
+  const subj = { 1: 'Rappel – factures échues non réglées', 2: 'Deuxième relance – factures échues impayées', 3: 'Mise en demeure de payer', 4: 'Mise en demeure avant action judiciaire' }[level];
+  const ref = `REL-N${level}-${c.acct}-${letterDate.replace(/-/g, '')}`;
+  const legal = 'Nous vous rappelons qu\'en application de la loi n° 69-21 modifiant et complétant le Code de commerce, le délai de paiement est fixé à 60 jours à compter de la date d\'émission de la facture lorsqu\'il n\'est pas convenu entre les parties, et ne peut excéder 120 jours lorsqu\'il est convenu. Tout retard au-delà de ces délais expose le débiteur à l\'amende pécuniaire prévue à l\'article 78-3 du Code de commerce, versée au Trésor et calculée au taux directeur de Bank Al-Maghrib augmenté de 0,85 % par mois ou fraction de mois de retard supplémentaire.';
+  const P = [];
+  if (level === 1) {
+    P.push(`Sauf erreur ou omission de notre part, l'examen de votre compte fait apparaître, à la date du ${fmtD(R.asOf)}, un solde échu de ${fmt(tot)} MAD TTC, correspondant aux factures détaillées ci-dessous.`);
+    P.push(`Il s'agit probablement d'un simple oubli. Nous vous remercions de bien vouloir procéder à leur règlement dans les meilleurs délais, par virement sur notre compte ${rib}, en rappelant les références des factures.`);
+    P.push(`Si votre règlement est intervenu entre-temps, nous vous prions de ne pas tenir compte de ce courrier. Notre service (${T(co.tel)} – ${T(co.email)}) reste à votre disposition pour toute question ou copie de facture.`);
+  } else if (level === 2) {
+    P.push(`Malgré notre précédent rappel, nous constatons que les factures ci-dessous, d'un montant total échu de ${fmt(tot)} MAD TTC, demeurent impayées à ce jour, avec un retard pouvant atteindre ${maxOd} jours par rapport à l'échéance convenue.`);
+    P.push(beyondLegal ? legal : 'Nous vous rappelons que le respect des échéances convenues conditionne la poursuite de nos relations commerciales dans de bonnes conditions, conformément à la loi n° 69-21 relative aux délais de paiement.');
+    P.push(`Nous vous demandons en conséquence de régulariser cette situation dans un délai de huit (8) jours à compter de la réception de la présente, par virement sur notre compte ${rib}.`);
+    P.push('À défaut, nous nous verrions contraints de suspendre l\'exécution de vos commandes en cours et d\'engager les démarches de recouvrement appropriées.');
+  } else {
+    P.push(`Nos relances précédentes étant restées sans effet, nous vous mettons en demeure, par la présente, de nous régler la somme de ${fmt(tot)} MAD TTC au titre des factures échues détaillées ci-dessous, dont certaines présentent un retard de ${maxOd} jours.`);
+    P.push(legal + (amende > 0 ? ` À titre indicatif, le montant de cette amende encourue par votre société sur les factures concernées est estimé à ${fmt(amende)} MAD à la date du ${fmtD(R.asOf)}.` : ''));
+    P.push('Faute de règlement intégral dans un délai de huit (8) jours à compter de la réception de la présente, nous engagerons sans autre avis toute procédure judiciaire utile au recouvrement de notre créance, notamment une requête en injonction de payer, les frais de procédure restant à votre charge.');
+    if (level === 4) P.push('Votre dossier a d\'ores et déjà été transmis à notre service juridique, qui suivra les suites de la présente mise en demeure.');
+    P.push('La présente lettre vaut mise en demeure. Nous restons néanmoins disposés à examiner toute proposition sérieuse d\'échéancier formalisée par écrit avant l\'expiration de ce délai.');
+  }
+  return { ref, subj, reco: level >= 3, its, tot, maxOd, P, amende, co, c, letterDate, closing: 'Nous vous prions d\'agréer, Madame, Monsieur, l\'expression de nos salutations distinguées.' };
+}
+function letterDom(M) {
+  const co = M.co, c = M.c; const T = v => v || '[à compléter]';
+  const tb = h('table', null, h('thead', null, h('tr', null, ['Facture', 'Date', 'Échéance', 'Retard (j)', 'Montant dû (MAD)'].map((x, i) => h('th', { class: i >= 3 ? 'num' : null }, x)))),
+    h('tbody', null, M.its.map(i => h('tr', null, h('td', null, i.ref), h('td', null, fmtD(i.doc)), h('td', null, fmtD(i.due)), h('td', { class: 'num' }, String(i.od)), h('td', { class: 'num' }, fmt(i.amount)))),
+      h('tr', { class: 'tot' }, h('td', { colspan: 4 }, 'Total échu'), h('td', { class: 'num' }, fmt(M.tot)))));
+  return h('article', { class: 'letter' },
+    h('div', { class: 'lh' },
+      h('div', { class: 'co' }, h('b', null, T(co.name)), h('div', null, T(co.addr)), h('div', null, T(co.city)), h('div', null, `ICE ${T(co.ice)} · RC ${T(co.rc)} · IF ${T(co.ifisc)}`), h('div', null, `${T(co.tel)} · ${T(co.email)}`)),
+      h('div', { class: 'to' }, M.reco ? h('div', { class: 'reco' }, 'LETTRE RECOMMANDÉE AVEC ACCUSÉ DE RÉCEPTION') : null, h('b', null, c.name), c.contact ? h('div', null, 'À l\'attention de ' + c.contact) : null, h('div', null, c.city || ''), c.email ? h('div', null, c.email) : null)),
+    h('div', { class: 'meta' }, `${T(co.city)}, le ${fmtD(M.letterDate)}`), h('div', { class: 'meta' }, `Réf. : ${M.ref} · Compte client : ${c.acct}`),
+    h('div', { class: 'obj' }, 'Objet : ' + M.subj), h('p', null, 'Madame, Monsieur,'), h('p', null, M.P[0]), tb, M.P.slice(1).map(x => h('p', null, x)), h('p', null, M.closing),
+    h('div', { class: 'sig' }, h('div', null, T(co.sign)), h('div', null, T(co.role)), h('div', null, h('b', null, T(co.name)))),
+    h('div', { class: 'fine' }, `Situation arrêtée au ${fmtD(M.asOf || '')}. Montants TTC en dirhams. Pièces jointes : relevé de compte et copies des factures sur demande.`));
+}
+function letterText(M) {
+  const co = M.co, c = M.c; const T = v => v || '[à compléter]';
+  const lines = [M.reco ? 'LETTRE RECOMMANDÉE AVEC ACCUSÉ DE RÉCEPTION\n' : '', `${T(co.name)}\n${T(co.addr)}\n${T(co.city)}\n`, `À l'attention de : ${c.name}${c.contact ? ' – ' + c.contact : ''}`, `${T(co.city)}, le ${fmtD(M.letterDate)}`, `Réf. : ${M.ref}`, '', `Objet : ${M.subj}`, '', 'Madame, Monsieur,', '', M.P[0], '',
+    ...M.its.map(i => `- Facture ${i.ref} du ${fmtD(i.doc)}, échue le ${fmtD(i.due)} (${i.od} j) : ${fmt(i.amount)} MAD`), `Total échu : ${fmt(M.tot)} MAD TTC`, '', ...M.P.slice(1).flatMap(x => [x, '']), M.closing, '', T(co.sign), T(co.role), T(co.name)];
+  return lines.filter(x => x !== null).join('\n');
+}
+const xe = x => String(x ?? '').replace(/[&<>"]/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch])).replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, '');
+function letterWordHtml(Ms) {
+  const body = Ms.map((M, idx) => { const co = M.co, c = M.c; const T = v => xe(v || '[à compléter]');
+    return `<div${idx < Ms.length - 1 ? ' style="page-break-after:always"' : ''}><table width="100%" style="border:0"><tr><td valign="top" style="border:0"><b style="font-size:15pt;color:#4f46e5">${T(co.name)}</b><br>${T(co.addr)}<br>${T(co.city)}<br><span style="font-size:9pt">ICE ${T(co.ice)} · RC ${T(co.rc)} · IF ${T(co.ifisc)}<br>${T(co.tel)} · ${T(co.email)}</span></td><td valign="top" style="border:0;border-left:3px solid #7c3aed;padding-left:10px">${M.reco ? '<b style="color:#b91c1c;font-size:9pt">LETTRE RECOMMANDÉE AVEC ACCUSÉ DE RÉCEPTION</b><br>' : ''}<b>${xe(c.name)}</b><br>${c.contact ? 'À l\'attention de ' + xe(c.contact) + '<br>' : ''}${xe(c.city)}</td></tr></table>
+<p style="font-size:10pt">${T(co.city)}, le ${fmtD(M.letterDate)}<br>Réf. : ${xe(M.ref)} · Compte client : ${xe(c.acct)}</p><p><b>Objet : ${xe(M.subj)}</b></p><p>Madame, Monsieur,</p><p>${xe(M.P[0])}</p>
+<table border="1" cellspacing="0" cellpadding="4" style="border-collapse:collapse;font-size:9.5pt;width:100%"><tr style="background:#f3f4f6"><th>Facture</th><th>Date</th><th>Échéance</th><th>Retard (j)</th><th>Montant dû (MAD)</th></tr>${M.its.map(i => `<tr><td>${xe(i.ref)}</td><td>${fmtD(i.doc)}</td><td>${fmtD(i.due)}</td><td align="right">${i.od}</td><td align="right">${fmt(i.amount)}</td></tr>`).join('')}<tr style="background:#f3f4f6"><td colspan="4"><b>Total échu</b></td><td align="right"><b>${fmt(M.tot)}</b></td></tr></table>
+${M.P.slice(1).map(x => `<p>${xe(x)}</p>`).join('')}<p>${xe(M.closing)}</p><p align="right">${T(co.sign)}<br>${T(co.role)}<br><b>${T(co.name)}</b></p></div>`; }).join('');
+  return `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word"><head><meta charset="utf-8"><title>Relances</title><style>body{font-family:Georgia,serif;font-size:11pt}p{text-align:justify}</style></head><body>${body}</body></html>`;
+}
+
+/* ============================ 6. Rendu ============================ */
+let STATE = { gl: null, sheets: null, meta: new Map(), R: null, file: null, cfg: JSON.parse(JSON.stringify(DEFAULT_CFG)), co: { ...EMPTY_CO }, levelOverride: new Map(), sel: new Set(), current: null, letterDate: todayIso() };
+const TABS = [{ id: 'dash', label: 'Tableau de bord' }, { id: 'aged', label: 'Balance âgée' }, { id: 'items', label: 'Factures ouvertes' }, { id: 'behav', label: 'Comportement de paiement' }, { id: 'relances', label: 'Relances' }, { id: 'law', label: 'Conformité loi 69-21' }, { id: 'prov', label: 'Risques & provisions' }, { id: 'params', label: 'Paramètres' }];
+let activeTab = 'dash';
+const badge = (t, k) => h('span', { class: 'badge b-' + k }, t);
+const scoreEl = sc => h('span', { class: 'score s-' + sc, title: { A: 'Excellent payeur', B: 'Bon payeur', C: 'Retards modérés', D: 'Retards importants', E: 'Risque élevé / douteux' }[sc] }, sc);
+const lvlEl = l => l ? h('span', { class: 'lvl ' + LVL[l].c }, `N${Math.min(l, 3)}${l === 4 ? '+' : ''} · ${LVL[l].l}`) : badge('À jour', 'ok');
+const ICONS = { wallet: 'M3 7h18v12H3zM16 13h2M3 7l3-4h12l3 4', clock: 'M12 7v5l3 2M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z', alert: 'M12 9v4m0 4h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z', target: 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM12 17a5 5 0 1 0 0-10 5 5 0 0 0 0 10zM12 13a1 1 0 1 0 0-2 1 1 0 0 0 0 2z', trend: 'M3 17l6-6 4 4 8-8M15 7h6v6', users: 'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8', mail: 'M4 4h16v16H4zM4 6l8 7 8-7', shield: 'M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z' };
+const icon = (k, sz = 18) => s('svg', { width: sz, height: sz, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', 'stroke-width': 2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'aria-hidden': 'true' }, s('path', { d: ICONS[k] }));
+function kpi(label, value, unit, sub, color, ic, hero, trend) {
+  const el = h('div', { class: 'card kpi' + (hero ? ' hero-k' : '') }, h('div', { class: 'top' }, h('span', { class: 'ic' }, icon(ic)), h('span', { class: 'l' }, label)),
+    h('div', { class: 'v' }, value, unit ? h('small', null, unit) : null, trend || null), sub ? h('div', { class: 's' }, sub) : null);
+  if (color) el.style.setProperty('--c', color);
+  return el;
+}
+function panelHead(title, desc, ...right) { return h('div', { class: 'panel-head' }, h('div', null, h('h2', null, title), desc ? h('p', null, desc) : null), h('div', { class: 'spacer' }), ...right); }
+
+function table(cols, rows, opts = {}) {
+  const wrap = h('div', { class: 'tablewrap' }); const tbl = h('table'); wrap.append(tbl);
+  let sortKey = opts.sortKey || null, sortDir = opts.sortDir || 1; const trh = h('tr');
+  cols.forEach(c => { const th = h('th', { class: [(c.num ? 'num' : ''), (c.nosort ? 'nosort' : ''), (c.bk ? 'bk' : '')].join(' ').trim() || null, scope: 'col', tabindex: c.nosort ? null : '0', title: c.title || null }, c.label);
+    if (c.bk) th.style.background = c.bk;
+    if (!c.nosort) { const go = () => { sortDir = sortKey === c.key ? -sortDir : (c.num ? -1 : 1); sortKey = c.key; [...trh.children].forEach(x => x.removeAttribute('aria-sort')); th.setAttribute('aria-sort', sortDir > 0 ? 'ascending' : 'descending'); draw(); };
+      th.addEventListener('click', go); th.addEventListener('keydown', ev => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); go(); } }); }
+    trh.append(th); });
+  tbl.append(h('thead', null, trh)); const tbody = h('tbody'); tbl.append(tbody); let current = rows;
+  function draw() {
+    clear(tbody); let data = current.slice();
+    if (sortKey) { const c = cols.find(x => x.key === sortKey); const v = r => c.sortVal ? c.sortVal(r) : r[c.key]; data.sort((a, b) => { const x = v(a), y = v(b); return (typeof x === 'number' && typeof y === 'number' ? x - y : String(x ?? '').localeCompare(String(y ?? ''), 'fr', { numeric: true })) * sortDir; }); }
+    const frag = document.createDocumentFragment();
+    for (const r of data) {
+      const tr = h('tr', { class: opts.rowClass ? opts.rowClass(r) : null });
+      for (const c of cols) { const v = c.render ? c.render(r) : c.num ? fmt(r[c.key]) : c.date ? fmtD(r[c.key]) : (r[c.key] ?? ''); const td = h('td', { class: [c.num ? 'num' : '', c.wrap ? 'wrap' : '', c.mono ? 'mono' : '', c.nowrap ? 'nowrap' : '', c.heat ? 'heat' : ''].join(' ').trim() || null }, v);
+        if (c.heat) c.heat(td, r); tr.append(td); }
+      if (opts.onRow) opts.onRow(tr, r, tbody);
+      frag.append(tr);
+    }
+    if (opts.totals && data.length) { const tr = h('tr', { class: 'tot' }); cols.forEach((c, i) => tr.append(h('td', { class: c.num ? 'num' : null }, i === 0 ? `Total (${data.length})` : c.sum ? fmt(r2(sum(data, x => x[c.key] || 0))) : ''))); frag.append(tr); }
+    if (!data.length) frag.append(h('tr', null, h('td', { colspan: cols.length }, 'Aucune ligne ne correspond aux filtres.')));
+    tbody.append(frag);
+  }
+  draw(); wrap.update = rs => { current = rs; draw(); }; return wrap;
+}
+function searchBox(ph) { const i = h('input', { type: 'search', placeholder: ph, 'aria-label': ph }); const ic = s('svg', { width: 16, height: 16, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', 'stroke-width': 2 }, s('circle', { cx: 11, cy: 11, r: 7 }), s('path', { d: 'm20 20-3.5-3.5' })); return { el: h('div', { class: 'search' }, ic, i), input: i }; }
+
+/* ---- Graphiques SVG ---- */
+function donut(R) {
+  const tot = sum(R.BK, b => Math.max(0, R.B[b.k])); const W = 220, cx = 110, cy = 110, ro = 96, ri = 64;
+  const svgEl = s('svg', { viewBox: `0 0 ${W} ${W}`, role: 'img', 'aria-label': 'Répartition de l\'encours par ancienneté' });
+  let a0 = -Math.PI / 2;
+  for (const b of R.BK) {
+    const v = Math.max(0, R.B[b.k]); if (!v || !tot) continue; const a1 = a0 + v / tot * Math.PI * 2 - 0.004; const large = a1 - a0 > Math.PI ? 1 : 0;
+    const p = (r, a) => `${cx + r * Math.cos(a)},${cy + r * Math.sin(a)}`;
+    const path = s('path', { d: `M${p(ro, a0)} A${ro},${ro} 0 ${large} 1 ${p(ro, a1)} L${p(ri, a1)} A${ri},${ri} 0 ${large} 0 ${p(ri, a0)} Z`, fill: b.c }, s('title', null, `${b.l} : ${fmt(v)} MAD (${fmtP(v / tot)})`));
+    svgEl.append(path); a0 = a1 + 0.004;
+  }
+  svgEl.append(s('text', { x: cx, y: cy - 6, 'text-anchor': 'middle', class: 'lbl-strong', 'font-size': 20 }, fmtK(R.encours)));
+  svgEl.append(s('text', { x: cx, y: cy + 14, 'text-anchor': 'middle' }, 'MAD d\'encours'));
+  svgEl.append(s('text', { x: cx, y: cy + 30, 'text-anchor': 'middle', fill: R.overdue / (R.encours || 1) > 0.5 ? '#dc2626' : '#059669', 'font-weight': 800 }, fmtP(R.overdue / (R.encours || 1), 0) + ' échu'));
+  return svgEl;
+}
+function comboChart(R) {
+  const S = R.series; const W = 760, H = 270, pl = 54, pr = 48, pt = 16, pb = 34; const iw = W - pl - pr, ih = H - pt - pb;
+  const maxV = Math.max(1, ...S.map(x => Math.max(x.sales, x.rec))) * 1.1; const maxD = Math.max(30, ...S.map(x => x.dso)) * 1.15;
+  const g = s('svg', { viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': 'Évolution mensuelle du chiffre d\'affaires, de l\'encours et du DSO' });
+  const defs = s('defs'); const lg = s('linearGradient', { id: 'gbar', x1: 0, y1: 0, x2: 0, y2: 1 }, s('stop', { offset: 0, 'stop-color': '#7c3aed' }), s('stop', { offset: 1, 'stop-color': '#4f46e5' }));
+  const lg2 = s('linearGradient', { id: 'garea', x1: 0, y1: 0, x2: 0, y2: 1 }, s('stop', { offset: 0, 'stop-color': '#db2777', 'stop-opacity': 0.25 }), s('stop', { offset: 1, 'stop-color': '#db2777', 'stop-opacity': 0 }));
+  defs.append(lg, lg2); g.append(defs);
+  for (let i = 0; i <= 4; i++) { const y = pt + ih - ih * i / 4; g.append(s('line', { x1: pl, x2: W - pr, y1: y, y2: y, class: 'grid' })); g.append(s('text', { x: pl - 8, y: y + 4, 'text-anchor': 'end' }, fmtK(maxV * i / 4))); g.append(s('text', { x: W - pr + 8, y: y + 4 }, Math.round(maxD * i / 4) + ' j')); }
+  const n = S.length, bw = iw / n; const pts = [];
+  S.forEach((x, i) => {
+    const x0 = pl + i * bw; const w = Math.min(18, bw / 3);
+    const h1 = x.sales / maxV * ih, h2 = x.rec / maxV * ih;
+    g.append(s('rect', { x: x0 + bw / 2 - w - 1, y: pt + ih - h1, width: w, height: Math.max(0, h1), rx: 4, fill: '#06b6d4', opacity: 0.85 }, s('title', null, `${x.m} – CA TTC : ${fmt(x.sales)} MAD`)));
+    g.append(s('rect', { x: x0 + bw / 2 + 1, y: pt + ih - h2, width: w, height: Math.max(0, h2), rx: 4, fill: 'url(#gbar)' }, s('title', null, `${x.m} – Encours fin de mois : ${fmt(x.rec)} MAD`)));
+    g.append(s('text', { x: x0 + bw / 2, y: H - 12, 'text-anchor': 'middle' }, x.m));
+    pts.push([x0 + bw / 2, pt + ih - x.dso / maxD * ih, x]);
+  });
+  if (pts.length) {
+    g.append(s('path', { d: `M${pts[0][0]},${pt + ih} ` + pts.map(p => `L${p[0]},${p[1]}`).join(' ') + ` L${pts[pts.length - 1][0]},${pt + ih} Z`, fill: 'url(#garea)' }));
+    g.append(s('path', { d: 'M' + pts.map(p => `${p[0]},${p[1]}`).join(' L'), fill: 'none', stroke: '#db2777', 'stroke-width': 3, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' }));
+    pts.forEach(p => g.append(s('circle', { cx: p[0], cy: p[1], r: 4.5, fill: '#fff', stroke: '#db2777', 'stroke-width': 2.5 }, s('title', null, `${p[2].m} – DSO : ${Math.round(p[2].dso)} jours`))));
+    const L = pts[pts.length - 1]; g.append(s('text', { x: L[0], y: L[1] - 12, 'text-anchor': 'middle', class: 'lbl-strong', fill: '#db2777' }, Math.round(L[2].dso) + ' j'));
+  }
+  return g;
+}
+function topClientsChart(R) {
+  const C = R.clients.filter(c => c.total > 0).slice(0, 10); const W = 760, rowH = 30, pl = 190, pr = 90; const H = C.length * rowH + 10; const max = Math.max(1, ...C.map(c => c.total));
+  const g = s('svg', { viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': 'Top 10 des clients par encours et ancienneté' });
+  C.forEach((c, i) => { const y = 6 + i * rowH; let x = pl; g.append(s('text', { x: pl - 10, y: y + 15, 'text-anchor': 'end', class: 'lbl-strong', 'font-size': 11.5 }, c.name.length > 26 ? c.name.slice(0, 25) + '…' : c.name));
+    g.append(s('rect', { x: pl, y: y + 3, width: W - pl - pr, height: 16, rx: 5, fill: 'var(--surface-2)' }));
+    for (const b of R.BK) { const v = Math.max(0, c.b[b.k]); if (!v) continue; const w = v / max * (W - pl - pr); g.append(s('rect', { x, y: y + 3, width: w, height: 16, fill: b.c }, s('title', null, `${c.name} – ${b.l} : ${fmt(v)} MAD`))); x += w; }
+    g.append(s('text', { x: W - pr + 8, y: y + 15, class: 'lbl-strong' }, fmtK(c.total))); });
+  return g;
+}
+const legend = BK => h('div', { class: 'legend' }, BK.map(b => { const sp = h('span', null, h('i'), b.l); sp.firstChild.style.setProperty('--c', b.c); return sp; }));
+
+function renderDash(R) {
+  const p = clear($('#p-dash'));
+  const trend = R.prevDso != null ? (() => { const d = Math.round(R.dsoCB - R.prevDso); return h('span', { class: 'trend ' + (d > 0 ? 'up' : 'down'), title: 'Variation sur un mois' }, (d > 0 ? '▲ +' : '▼ ') + d + ' j'); })() : null;
+  p.append(panelHead('Tableau de bord du recouvrement', `Situation au ${fmtD(R.asOf)} · période d'activité du ${fmtD(R.start)} (${R.days} jours) · ${R.clients.length} comptes clients.`));
+  p.append(h('div', { class: 'kpis' },
+    kpi('Encours clients', fmtK(R.encours), 'MAD', `${fmt(R.encours)} MAD TTC · ${R.items.length} factures ouvertes`, null, 'wallet', true),
+    kpi('DSO (épuisement)', String(Math.round(R.dsoCB)), 'jours', `DSO comptable ${Math.round(R.dsoSimple)} j · délai convenu moyen ${Math.round(R.avgTerms)} j`, '#db2777', 'clock', false, trend),
+    kpi('Encours échu', fmtP(R.encours ? R.overdue / R.encours : 0, 0), '', `${fmt(R.overdue)} MAD · dont > 90 j : ${fmtK(sum(R.items.filter(i => i.od > 90), i => i.amount))}`, '#f97316', 'alert'),
+    kpi('Retard moyen (ADD)', String(Math.max(0, Math.round(R.add))), 'jours', `DSO − DSO optimal (${Math.round(R.bpdso)} j)`, '#7c3aed', 'trend'),
+    kpi('CEI', R.cei != null ? fmtP(R.cei, 0) : '–', '', 'Efficacité du recouvrement (objectif > 80 %)', R.cei != null && R.cei >= 0.8 ? '#10b981' : '#eab308', 'target'),
+    kpi('Délai de paiement constaté', R.dmp != null ? String(Math.round(R.dmp)) : '–', 'jours', `Factures soldées · ${R.onTime != null ? fmtP(R.onTime, 0) : '–'} payées dans les délais`, '#06b6d4', 'clock'),
+    kpi('Concentration top 5', fmtP(R.top5, 0), '', 'Part de l\'encours sur les 5 premiers clients', '#4f46e5', 'users'),
+    kpi('Clients à relancer', String(R.toRelance.length), '', `${R.toRelance.filter(c => c.level >= 3).length} mise(s) en demeure · ${fmtK(sum(R.toRelance, c => c.overdue))} MAD échus`, '#dc2626', 'mail')));
+  const bl = h('ul', { class: 'blist' }, R.BK.map(b => { const v = R.B[b.k]; const li = h('li', null, h('i'), h('span', null, b.l), h('span', { class: 'pc' }, fmtP(R.encours ? v / R.encours : 0)), h('span', { class: 'am' }, fmt(v))); li.firstChild.style.setProperty('--c', b.c); return li; }));
+  p.append(h('div', { class: 'grid3' },
+    h('div', { class: 'card sec' }, h('h3', null, 'Ancienneté de l\'encours'), h('p', { class: 'sub' }, R.cfg.basis === 'inv' ? 'Par âge depuis la date de facture' : 'Par retard depuis l\'échéance contractuelle'), h('div', { class: 'donut-wrap' }, h('div', { class: 'chart' }, donut(R)), bl)),
+    h('div', { class: 'card sec' }, h('h3', null, 'Chiffre d\'affaires, encours et DSO mensuels'), h('p', { class: 'sub' }, 'Barres : CA TTC du mois et encours fin de mois · courbe : DSO par épuisement'),
+      h('div', { class: 'chart' }, comboChart(R)), (() => { const lg = h('div', { class: 'legend' }); [['#06b6d4', 'CA TTC du mois'], ['#6d44e8', 'Encours fin de mois'], ['#db2777', 'DSO (jours)']].forEach(([c, l]) => { const sp = h('span', null, h('i'), l); sp.firstChild.style.setProperty('--c', c); lg.append(sp); }); return lg; })())));
+  const ins = [];
+  const worst = R.clients.filter(c => c.overdue > 0).sort((a, b) => b.overdue - a.overdue)[0];
+  if (worst) ins.push(['ko', '!', `${worst.name} concentre ${fmtP(worst.overdue / (R.overdue || 1), 0)} de l'encours échu (${fmt(worst.overdue)} MAD, retard max ${worst.maxOd} j).`]);
+  if (R.illegalTerms.length) ins.push(['ko', '§', `${R.illegalTerms.length} client(s) avec un délai convenu supérieur au plafond légal de ${R.cfg.legalMax} jours : ${R.illegalTerms.map(c => c.name).join(', ')}.`]);
+  if (R.lateLegal.length) ins.push(['warn', '⏱', `${R.lateLegal.length} facture(s) dépassent le délai légal (${fmt(sum(R.lateLegal, i => i.amount))} MAD) : amende encourue par les clients estimée à ${fmt(R.amende)} MAD – argument de relance.`]);
+  if (R.dsoCB > R.avgTerms + 15) ins.push(['warn', '↗', `Le DSO (${Math.round(R.dsoCB)} j) dépasse de ${Math.round(R.dsoCB - R.avgTerms)} jours le délai moyen convenu : environ ${fmtK((R.dsoCB - R.avgTerms) * R.salesAll / R.days)} MAD de trésorerie à libérer.`]);
+  if (R.provSugg > R.provision + 1) ins.push(['info', '∑', `Provision suggérée ${fmt(R.provSugg)} MAD HT contre ${fmt(R.provision)} MAD comptabilisés : complément possible ${fmt(R.provSugg - R.provision)} MAD.`]);
+  if (R.effets > 0) ins.push(['info', '⇄', `${fmt(R.effets)} MAD d'effets (LCN) en portefeuille non encore échus : risque d'impayé à suivre.`]);
+  if (Math.abs(R.ecart) > 0.01) ins.push(['ko', '≠', `Écart de ${fmt(R.ecart)} MAD entre la balance âgée et le solde comptable des comptes clients.`]); else ins.push(['ok', '✓', 'Balance âgée rapprochée au centime avec le solde comptable des comptes clients.']);
+  p.append(h('div', { class: 'grid2' },
+    h('div', { class: 'card sec' }, h('h3', null, 'Top 10 clients par encours'), h('p', { class: 'sub' }, 'Ventilation par ancienneté – survolez pour le détail'), h('div', { class: 'chart' }, topClientsChart(R)), legend(R.BK)),
+    h('div', { class: 'card sec' }, h('h3', null, 'Points d\'attention'), h('ul', { class: 'insights' }, ins.map(([k, ic, t]) => h('li', null, h('span', { class: 'dot d-' + k }, ic), h('span', null, t)))))));
+}
+
+function renderAged(R) {
+  const p = clear($('#p-aged'));
+  p.append(panelHead('Balance âgée clients', `Encours par client et par tranche ${R.cfg.basis === 'inv' ? 'd\'âge (date de facture)' : 'de retard (échéance contractuelle)'} au ${fmtD(R.asOf)}. Cliquez sur une ligne pour voir les factures.`));
+  const sb = searchBox('Rechercher un client'); const fSc = h('select', { 'aria-label': 'Filtrer par score' }, h('option', { value: '' }, 'Tous scores'), ['A', 'B', 'C', 'D', 'E'].map(x => h('option', { value: x }, 'Score ' + x)));
+  const fEch = h('input', { type: 'checkbox' });
+  p.append(h('div', { class: 'toolbar' }, sb.el, fSc, h('label', { class: 'ck' }, fEch, 'Clients avec échu uniquement')));
+  const maxB = Math.max(1, ...R.clients.flatMap(c => R.BK.map(b => c.b[b.k])));
+  const heat = b => (td, r) => { const v = r.b ? r.b[b.k] : 0; if (v > 0) { const a = 0.12 + 0.55 * Math.min(1, v / maxB); td.style.backgroundColor = b.c + Math.round(a * 255).toString(16).padStart(2, '0'); } };
+  const cols = [
+    { key: 'name', label: 'Client', render: r => h('span', null, h('span', { class: 'caret' }, '▸'), ' ', h('b', null, r.name), r.doubt ? [' ', badge('Douteux', 'ko')] : null) },
+    { key: 'acct', label: 'Compte', mono: true }, { key: 'terms', label: 'Délai', num: true, render: r => h('span', null, r.terms + ' j', r.termsIllegal ? [' ', badge('> légal', 'ko')] : null) },
+    { key: 'total', label: 'Encours', num: true, sum: true, render: r => h('b', null, fmt(r.total)) },
+    ...R.BK.map(b => ({ key: 'bk_' + b.k, label: b.l, num: true, bk: b.c, sortVal: r => r.b[b.k], render: r => fmt(r.b[b.k]), heat: heat(b) })),
+    { key: 'unapplied', label: 'Crédits non affectés', num: true, render: r => r.unapplied ? fmt(-r.unapplied) : '' },
+    { key: 'pctOverdue', label: '% échu', num: true, render: r => h('div', null, fmtP(r.pctOverdue, 0)) },
+    { key: 'maxOd', label: 'Retard max', num: true, render: r => r.maxOd ? r.maxOd + ' j' : '–' },
+    { key: 'score', label: 'Score', render: r => scoreEl(r.score) }, { key: 'level', label: 'Relance', render: r => lvlEl(r.level) }
+  ];
+  const t = table(cols, R.clients, { sortKey: 'total', sortDir: -1,
+    onRow: (tr, r) => { tr.classList.add('clickable'); tr.tabIndex = 0; let subs = null;
+      const toggle = () => { if (subs) { subs.forEach(x => x.remove()); subs = null; tr.classList.remove('open'); return; } tr.classList.add('open');
+        subs = r.items.slice().sort((a, b) => a.doc.localeCompare(b.doc)).map(i => { const row = h('tr', { class: 'sub' }, h('td', null, '   ↳ ', i.ref, i.partial ? [' ', badge('partiel', 'mute')] : null, i.glob ? [' ', badge('AN global', 'warn')] : null), h('td', null, fmtD(i.doc)), h('td', { class: 'num' }, 'éch. ' + fmtD(i.due)), h('td', { class: 'num' }, fmt(i.amount)),
+          ...R.BK.map(b => h('td', { class: 'num' }, i.bucket === b.k ? fmt(i.amount) : '')), h('td'), h('td'), h('td', { class: 'num' }, i.od > 0 ? i.od + ' j' : '–'), h('td'), h('td')); return row; });
+        if (r.unapplied) subs.push(h('tr', { class: 'sub' }, h('td', { colspan: 3 }, '   ↳ Règlements non affectés (imputés FIFO puis solde)'), h('td', { class: 'num' }, fmt(-r.unapplied)), h('td', { colspan: R.BK.length + 5 })));
+        let ref = tr; subs.forEach(x => { ref.after(x); ref = x; }); };
+      tr.addEventListener('click', toggle); tr.addEventListener('keydown', ev => { if (ev.key === 'Enter') toggle(); }); } });
+  const totals = h('div', { class: 'tablewrap' }, h('table', null, h('tbody', null, h('tr', { class: 'tot' }, h('td', null, h('b', null, 'TOTAL GÉNÉRAL')), h('td', { class: 'num' }, fmt(R.encours)), ...R.BK.map(b => h('td', { class: 'num' }, h('span', null, b.l + ' : ', h('b', null, fmt(R.B[b.k]))))))))) ;
+  const apply = () => { const q = norm(sb.input.value); t.update(R.clients.filter(c => (!q || norm(c.name + c.acct).includes(q)) && (!fSc.value || c.score === fSc.value) && (!fEch.checked || c.overdue > 0))); };
+  [sb.input, fSc, fEch].forEach(x => x.addEventListener('input', apply));
+  p.append(t, h('div', { class: 'foot' }, `Total encours : ${fmt(R.encours)} MAD · solde comptable des comptes clients : ${fmt(R.glClients)} MAD · écart : ${fmt(R.ecart)}. Règlements non lettrés imputés sur les factures les plus anciennes (FIFO).`));
+}
+
+function renderItems(R) {
+  const p = clear($('#p-items'));
+  p.append(panelHead('Factures ouvertes', 'Détail des créances non soldées : échéance contractuelle, échéance légale (plafond 120 j), retard et amende encourue par le client au titre de la loi 69-21.'));
+  const sb = searchBox('Client, facture…'); const fB = h('select', { 'aria-label': 'Tranche' }, h('option', { value: '' }, 'Toutes tranches'), R.BK.map(b => h('option', { value: b.k }, b.l)));
+  const fL = h('input', { type: 'checkbox' });
+  p.append(h('div', { class: 'toolbar' }, sb.el, fB, h('label', { class: 'ck' }, fL, 'Hors délai légal uniquement')));
+  const cols = [{ key: 'name', label: 'Client' }, { key: 'ref', label: 'Facture', mono: true }, { key: 'doc', label: 'Date facture', date: true, nowrap: true }, { key: 'terms', label: 'Délai', num: true, render: r => r.terms + ' j' },
+    { key: 'due', label: 'Échéance', date: true, nowrap: true }, { key: 'legalDue', label: 'Échéance légale', date: true, nowrap: true }, { key: 'original', label: 'Montant initial', num: true, sum: true }, { key: 'fifo', label: 'Imputé FIFO', num: true, sum: true },
+    { key: 'amount', label: 'Reste dû', num: true, sum: true, render: r => h('b', null, fmt(r.amount)) }, { key: 'age', label: 'Âge', num: true, render: r => r.age + ' j' },
+    { key: 'od', label: 'Retard', num: true, render: r => r.od > 0 ? h('span', { class: 'badge ' + (r.od > 90 ? 'b-ko' : r.od > 30 ? 'b-warn' : 'b-info') }, r.od + ' j') : badge('à échoir', 'ok') },
+    { key: 'bucketL', label: 'Tranche', render: r => { const b = R.BK.find(x => x.k === r.bucket); const e = h('span', { class: 'badge' }, r.bucketL); e.style.background = b.c + '22'; e.style.color = b.c; return e; } },
+    { key: 'amende', label: 'Amende client (est.)', num: true, sum: true, title: 'Amende pécuniaire encourue par le client débiteur (art. 78-3), au profit du Trésor' }];
+  const t = table(cols, R.items, { totals: true, sortKey: 'od', sortDir: -1, rowClass: r => r.lod > 0 ? 'warn' : null });
+  const apply = () => { const q = norm(sb.input.value); t.update(R.items.filter(i => (!q || norm(i.name + i.ref + i.acct).includes(q)) && (!fB.value || i.bucket === fB.value) && (!fL.checked || i.lod > 0))); };
+  [sb.input, fB, fL].forEach(x => x.addEventListener('input', apply));
+  p.append(t, h('p', { class: 'foot' }, 'Lignes orangées : facture au-delà de l\'échéance légale. « AN global » : à-nouveau non détaillé, l\'ancienneté réelle est inconnue.'));
+}
+
+function renderBehav(R) {
+  const p = clear($('#p-behav'));
+  p.append(panelHead('Comportement de paiement', 'Délais réellement constatés sur les factures soldées de la période (lettrage), DSO et score de risque par client.'));
+  const cols = [{ key: 'name', label: 'Client', render: r => h('b', null, r.name) }, { key: 'score', label: 'Score', render: r => scoreEl(r.score) }, { key: 'sales', label: 'CA TTC période', num: true, sum: true },
+    { key: 'total', label: 'Encours', num: true, sum: true }, { key: 'dsoC', label: 'DSO client', num: true, sortVal: r => r.sales > 0 ? r.total / r.sales * R.days : 0, render: r => r.sales > 0 ? Math.round(r.total / r.sales * R.days) + ' j' : '–' },
+    { key: 'terms', label: 'Délai convenu', num: true, render: r => r.terms + ' j' }, { key: 'dmp', label: 'Délai constaté', num: true, sortVal: r => r.dmp ?? -1, render: r => r.dmp != null ? Math.round(r.dmp) + ' j' : '–' },
+    { key: 'drift', label: 'Dérive', num: true, sortVal: r => r.dmp != null ? r.dmp - r.terms : -999, render: r => { if (r.dmp == null) return '–'; const d = Math.round(r.dmp - r.terms); return h('span', { class: 'badge ' + (d > 30 ? 'b-ko' : d > 0 ? 'b-warn' : 'b-ok') }, (d > 0 ? '+' : '') + d + ' j'); } },
+    { key: 'onTime', label: '% à temps', num: true, sortVal: r => r.onTime ?? -1, render: r => r.onTime != null ? fmtP(r.onTime, 0) : '–' },
+    { key: 'wOd', label: 'Retard moyen encours', num: true, render: r => r.wOd ? Math.round(r.wOd) + ' j' : '–' }, { key: 'lastPay', label: 'Dernier règlement', date: true, nowrap: true },
+    { key: 'mix', label: 'Profil d\'encours', nosort: true, render: r => { const bar = h('div', { class: 'minibar', title: R.BK.map(b => `${b.l} : ${fmt(r.b[b.k])}`).join('\n') }); const tot = sum(R.BK, b => Math.max(0, r.b[b.k])); if (tot > 0) for (const b of R.BK) { const v = Math.max(0, r.b[b.k]); if (!v) continue; const i = h('i'); i.style.width = (v / tot * 100) + '%'; i.style.background = b.c; bar.append(i); } return bar; } }];
+  p.append(table(cols, R.clients, { totals: true, sortKey: 'score', sortDir: -1 }));
+  p.append(h('p', { class: 'foot' }, 'Score : A excellent (retard ≤ 15 j) · B bon · C retards > 60 j · D > 90 j ou plus de 40 % de l\'encours échu depuis plus de 60 j · E > 180 j ou client douteux.'));
+}
+
+function renderRelances(R) {
+  const p = clear($('#p-relances')); const co = STATE.co;
+  p.append(panelHead('Relances clients automatisées', 'Niveau proposé selon le retard maximal : rappel amiable, relance ferme, mise en demeure (lettre recommandée). Personnalisez, puis imprimez en PDF, téléchargez en Word ou envoyez par email.'));
+  if (!co.name) p.append(h('div', { class: 'banner' }, '⚠ Complétez l\'identité de votre société (raison sociale, ICE, RIB, signataire…) dans l\'onglet Paramètres : elle figure en tête des lettres.'));
+  if (!R.toRelance.length) { p.append(h('div', { class: 'card sec' }, 'Aucun client à relancer à cette date. 🎉')); return; }
+  const list = h('div', { class: 'card rel-list', role: 'listbox', 'aria-label': 'Clients à relancer' });
+  const preview = h('div', { class: 'paper-wrap' });
+  const selAll = h('input', { type: 'checkbox', 'aria-label': 'Tout sélectionner' });
+  const lvlSel = h('select', { 'aria-label': 'Niveau de relance' }, [1, 2, 3, 4].map(l => h('option', { value: l }, `N${Math.min(l, 3)}${l === 4 ? '+' : ''} – ${LVL[l].l}`)));
+  const dateIn = h('input', { type: 'date', value: STATE.letterDate, 'aria-label': 'Date des lettres' }); dateIn.addEventListener('change', () => { STATE.letterDate = dateIn.value || todayIso(); show(); });
+  const levelOf = c => STATE.levelOverride.get(c.acct) || c.level;
+  const model = c => { const M = letterModel(R, c, levelOf(c), co, STATE.letterDate); M.asOf = R.asOf; return M; };
+  if (!STATE.current || !R.toRelance.some(c => c.acct === STATE.current)) STATE.current = R.toRelance[0].acct;
+  const items = new Map();
+  for (const c of R.toRelance) {
+    const ck = h('input', { type: 'checkbox', 'aria-label': 'Sélectionner ' + c.name, checked: STATE.sel.has(c.acct) || null });
+    ck.addEventListener('click', ev => ev.stopPropagation()); ck.addEventListener('change', () => { ck.checked ? STATE.sel.add(c.acct) : STATE.sel.delete(c.acct); });
+    const it = h('div', { class: 'rel-item', role: 'option', tabindex: 0 }, ck, h('div', null, h('div', { class: 'nm' }, c.name), h('div', { class: 'meta' }, `${c.items.filter(i => i.od > 0).length} facture(s) · retard max ${c.maxOd} j`), h('div', null, lvlEl(levelOf(c)))), h('div', { class: 'amt' }, fmtK(c.overdue), h('div', { class: 'meta' }, 'MAD')));
+    const pick = () => { STATE.current = c.acct; show(); }; it.addEventListener('click', pick); it.addEventListener('keydown', ev => { if (ev.key === 'Enter') pick(); });
+    items.set(c.acct, it); list.append(it);
+  }
+  selAll.addEventListener('change', () => { R.toRelance.forEach(c => selAll.checked ? STATE.sel.add(c.acct) : STATE.sel.delete(c.acct)); [...list.querySelectorAll('input[type=checkbox]')].forEach(x => { x.checked = selAll.checked; }); });
+  const cur = () => R.toRelance.find(c => c.acct === STATE.current);
+  lvlSel.addEventListener('change', () => { const c = cur(); STATE.levelOverride.set(c.acct, +lvlSel.value); const it = items.get(c.acct); it.querySelector('.lvl,.badge')?.replaceWith(lvlEl(+lvlSel.value)); show(); });
+  const mailBtn = h('a', { class: 'btn btn-sm', href: '#', rel: 'noopener' }, icon('mail', 15), 'Envoyer par email');
+  const btnCopy = h('button', { class: 'btn btn-sm' }, 'Copier le texte');
+  const btnDoc = h('button', { class: 'btn btn-sm' }, 'Word (.doc)');
+  const btnPrint1 = h('button', { class: 'btn btn-sm' }, 'PDF / imprimer');
+  const btnPrintSel = h('button', { class: 'btn btn-grad btn-sm' }, 'Imprimer la sélection');
+  const btnDocSel = h('button', { class: 'btn btn-sm' }, 'Word – sélection');
+  function show() {
+    const c = cur(); items.forEach((el, a) => el.classList.toggle('active', a === c.acct)); lvlSel.value = String(levelOf(c));
+    const M = model(c); clear(preview).append(letterDom(M));
+    const body = letterText(M); const mail = `mailto:${encodeURIComponent(c.email || '')}?subject=${encodeURIComponent(M.subj + ' – ' + c.name)}&body=${encodeURIComponent(body.slice(0, 1800))}`;
+    mailBtn.setAttribute('href', mail); mailBtn.title = c.email ? 'Ouvre votre messagerie vers ' + c.email : 'Aucun email : renseignez-le dans Paramètres ou la feuille Clients';
+  }
+  btnCopy.addEventListener('click', async () => { try { await navigator.clipboard.writeText(letterText(model(cur()))); toast('Texte de la lettre copié.', 'ok'); } catch (_) { toast('Copie impossible dans ce navigateur.', 'err'); } });
+  const dl = (blob, name) => { const url = URL.createObjectURL(blob); const a = h('a', { href: url, download: name }); document.body.append(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 4000); };
+  const safe = x => x.replace(/[^\w-]+/g, '_').slice(0, 40);
+  btnDoc.addEventListener('click', () => { const c = cur(); dl(new Blob(['﻿', letterWordHtml([model(c)])], { type: 'application/msword' }), `Relance_N${Math.min(levelOf(c), 3)}_${safe(c.name)}_${STATE.letterDate}.doc`); });
+  const selected = () => R.toRelance.filter(c => STATE.sel.has(c.acct));
+  btnDocSel.addEventListener('click', () => { const S = selected(); if (!S.length) { toast('Sélectionnez au moins un client (cases à cocher).', 'err'); return; } dl(new Blob(['﻿', letterWordHtml(S.map(model))], { type: 'application/msword' }), `Relances_${S.length}_clients_${STATE.letterDate}.doc`); });
+  const printLetters = Ms => { const pa = clear($('#print-area')); Ms.forEach(M => pa.append(letterDom(M))); document.body.classList.add('printing-letters'); window.print(); };
+  btnPrint1.addEventListener('click', () => printLetters([model(cur())]));
+  btnPrintSel.addEventListener('click', () => { const S = selected(); if (!S.length) { toast('Sélectionnez au moins un client (cases à cocher).', 'err'); return; } printLetters(S.map(model)); });
+  const summary = h('div', { class: 'kpis' }, [1, 2, 3, 4].map(l => { const cs = R.toRelance.filter(c => levelOf(c) === l); return kpi(LVL[l].l, String(cs.length), cs.length > 1 ? 'clients' : 'client', fmt(sum(cs, c => c.overdue)) + ' MAD échus', { 1: '#0ea5e9', 2: '#f59e0b', 3: '#dc2626', 4: '#4c1d95' }[l], l === 1 ? 'mail' : l === 4 ? 'shield' : 'alert'); }));
+  p.append(summary, h('div', { class: 'rel' },
+    h('div', null, h('div', { class: 'rel-tools' }, h('label', { class: 'ck toolbar' }, selAll, ' Tout sélectionner'), btnPrintSel, btnDocSel), list),
+    h('div', null, h('div', { class: 'rel-tools' }, h('span', { class: 'foot' }, 'Niveau :'), lvlSel, h('span', { class: 'foot' }, 'Date :'), dateIn, h('span', { class: 'spacer' }), btnPrint1, btnDoc, btnCopy, mailBtn), preview)));
+  show();
+}
+
+function renderLaw(R) {
+  const p = clear($('#p-law')); const c = R.cfg;
+  p.append(panelHead('Conformité – loi n° 69-21 sur les délais de paiement', 'Contrôle des délais convenus, des factures réglées ou restant dues au-delà du délai légal et de l\'amende pécuniaire encourue par les clients débiteurs.'));
+  p.append(h('div', { class: 'card sec' }, h('h3', null, 'Rappel des règles appliquées'), h('div', { class: 'rules' },
+    h('div', { class: 'rule' }, h('b', null, `${c.defTerms} jours`), 'Délai légal à compter de la date d\'émission de la facture, à défaut d\'accord entre les parties. La facture doit être émise au plus tard le dernier jour du mois de livraison ou de prestation.'),
+    h('div', { class: 'rule' }, h('b', null, `${c.legalMax} jours max.`), 'Délai convenu maximal entre les parties. Un délai dérogatoire (180 jours au plus) peut être fixé par décret pour certains secteurs.'),
+    h('div', { class: 'rule' }, h('b', null, `${String(c.td).replace('.', ',')} % + ${String(c.majo).replace('.', ',')} %/mois`), 'Amende pécuniaire au profit du Trésor, à la charge du débiteur : taux directeur BAM pour le premier mois de retard, majoré par mois ou fraction de mois supplémentaire. Déclaration auprès de la DGI (SIMPL – Délais de paiement).'))));
+  p.append(h('div', { class: 'kpis' },
+    kpi('Délais convenus > plafond', String(R.illegalTerms.length), 'client(s)', R.illegalTerms.map(x => `${x.name} (${x.terms} j)`).join(', ') || 'Aucun', R.illegalTerms.length ? '#dc2626' : '#10b981', 'shield'),
+    kpi('Factures dues hors délai légal', String(R.lateLegal.length), '', fmt(sum(R.lateLegal, i => i.amount)) + ' MAD restant dus', '#f97316', 'alert'),
+    kpi('Factures payées hors délai légal', String(R.paidLate.length), '', fmt(sum(R.paidLate, x => x.amount)) + ' MAD sur la période', '#eab308', 'clock'),
+    kpi('Amende encourue par les clients', fmtK(R.amende), 'MAD', 'Estimation sur les factures encore dues', '#7c3aed', 'target')));
+  const byC = R.clients.map(cl => { const late = R.lateLegal.filter(i => i.acct === cl.acct); const pl = R.paidLate.filter(x => x.acct === cl.acct); return { name: cl.name, terms: cl.terms, illegal: cl.termsIllegal, nLate: late.length, late: r2(sum(late, i => i.amount)), maxLod: late.length ? Math.max(...late.map(i => i.lod)) : 0, amende: r2(sum(late, i => i.amende)), nPaidLate: pl.length, paidLate: r2(sum(pl, x => x.amount)), avgLate: pl.length ? Math.round(sum(pl, x => diffDays(x.pay, x.doc) - x.legalTerms) / pl.length) : 0 }; }).filter(x => x.nLate || x.nPaidLate || x.illegal);
+  p.append(table([{ key: 'name', label: 'Client', render: r => h('b', null, r.name) }, { key: 'terms', label: 'Délai convenu', num: true, render: r => h('span', null, r.terms + ' j', r.illegal ? [' ', badge('non conforme', 'ko')] : null) },
+    { key: 'nLate', label: 'Fact. dues hors délai', num: true, render: r => String(r.nLate) }, { key: 'late', label: 'Montant dû hors délai', num: true, sum: true }, { key: 'maxLod', label: 'Dépassement max', num: true, render: r => r.maxLod ? r.maxLod + ' j' : '–' },
+    { key: 'amende', label: 'Amende client (est.)', num: true, sum: true }, { key: 'nPaidLate', label: 'Fact. payées hors délai', num: true, render: r => String(r.nPaidLate) }, { key: 'paidLate', label: 'Montant payé hors délai', num: true, sum: true },
+    { key: 'avgLate', label: 'Dépassement moyen', num: true, render: r => r.avgLate ? r.avgLate + ' j' : '–' }], byC, { totals: true, sortKey: 'late', sortDir: -1, rowClass: r => r.illegal ? 'warn' : null }));
+  p.append(h('p', { class: 'foot' }, `Calcul indicatif à partir de la date d'émission de la facture (date de pièce) et du délai convenu plafonné à ${c.legalMax} jours, pour les factures émises depuis le ${fmtD(c.lawStart)}. L'amende est due par le client débiteur au Trésor ; elle n'est pas facturable par le fournisseur. Taux directeur paramétrable (onglet Paramètres).`));
+}
+
+function renderProv(R) {
+  const p = clear($('#p-prov')); const c = R.cfg;
+  p.append(panelHead('Risques & provisions', 'Proposition de dépréciation des créances (taux de gestion paramétrables, base HT) et exposition globale au risque client.'));
+  p.append(h('div', { class: 'kpis' },
+    kpi('Exposition totale', fmtK(R.encours + Math.max(0, R.effets)), 'MAD', `Encours ${fmtK(R.encours)} + effets en portefeuille ${fmtK(R.effets)}`, '#4f46e5', 'wallet', true),
+    kpi('Provision comptabilisée', fmtK(R.provision), 'MAD', `Solde des comptes ${c.p.provision}`, '#06b6d4', 'shield'),
+    kpi('Provision suggérée', fmtK(R.provSugg), 'MAD', `Douteux ${c.provDoubt} % · > 365 j ${c.prov365} % · > 180 j ${c.prov181} % (HT)`, '#db2777', 'target'),
+    kpi('Complément à étudier', fmtK(Math.max(0, R.provSugg - R.provision)), 'MAD', R.provSugg > R.provision ? 'Dotation complémentaire' : 'Reprise possible : ' + fmtK(R.provision - R.provSugg), '#f97316', 'trend')));
+  const rows = R.clients.filter(x => x.provSugg > 0 || x.doubt || x.score === 'E' || x.score === 'D');
+  p.append(table([{ key: 'name', label: 'Client', render: r => h('span', null, h('b', null, r.name), r.doubt ? [' ', badge('3424', 'ko')] : null) }, { key: 'score', label: 'Score', render: r => scoreEl(r.score) }, { key: 'total', label: 'Encours TTC', num: true, sum: true },
+    { key: 'o180', label: 'Échu > 180 j', num: true, sum: true, sortVal: r => sum(r.items.filter(i => i.od > 180), i => i.amount), render: r => fmt(sum(r.items.filter(i => i.od > 180), i => i.amount)) },
+    { key: 'maxOd', label: 'Retard max', num: true, render: r => r.maxOd + ' j' }, { key: 'provSugg', label: 'Provision suggérée (HT)', num: true, sum: true },
+    { key: 'act', label: 'Action recommandée', nosort: true, wrap: true, render: r => r.doubt ? 'Créance litigieuse : action judiciaire à engager ou suivre (condition de déductibilité fiscale de la provision).' : r.maxOd > c.contentieux ? 'Mise en demeure puis injonction de payer ; bloquer les nouvelles livraisons.' : 'Relance ferme et plan d\'apurement écrit.' }],
+    rows, { totals: true, sortKey: 'provSugg', sortDir: -1 }));
+  p.append(h('div', { class: 'banner info' }, 'ℹ Fiscalité (CGI, art. 10-I-F-2°) : la provision pour créances douteuses n\'est déductible que si un recours judiciaire est introduit dans les 12 mois suivant sa constitution. Les taux proposés ici sont des taux de gestion, à ajuster au cas par cas.'));
+  if (R.avances > 0) p.append(h('p', { class: 'foot' }, `Avances et acomptes reçus des clients (${c.p.avances}) : ${fmt(R.avances)} MAD – à imputer sur les factures à venir.`));
+}
+
+function renderParams() {
+  const p = clear($('#p-params')); const c = STATE.cfg, co = STATE.co;
+  p.append(panelHead('Paramètres', 'Identité de votre société (en-tête des lettres), règles de calcul et conditions de paiement par client. Les modifications s\'appliquent immédiatement.'));
+  const F = (id, label, value, help, type = 'text', cls = '') => h('div', { class: 'field ' + cls }, h('label', { for: id }, label), h('input', { id, type, value: value ?? '', autocomplete: 'off', spellcheck: 'false', step: type === 'number' ? 'any' : null }), help ? h('small', null, help) : null);
+  p.append(h('div', { class: 'card sec' }, h('h3', null, 'Votre société (expéditeur des relances)'), h('div', { class: 'form' },
+    F('co-name', 'Raison sociale', co.name, '', 'text', 'span2'), F('co-addr', 'Adresse', co.addr, '', 'text', 'span2'), F('co-city', 'Ville', co.city), F('co-ice', 'ICE', co.ice), F('co-rc', 'RC', co.rc), F('co-ifisc', 'IF', co.ifisc),
+    F('co-tel', 'Téléphone', co.tel), F('co-email', 'Email recouvrement', co.email), F('co-sign', 'Signataire', co.sign), F('co-role', 'Fonction', co.role), F('co-rib', 'RIB (virement)', co.rib, '', 'text', 'span2'))));
+  const basis = h('select', { id: 'pr-basis' }, h('option', { value: 'due', selected: c.basis === 'due' || null }, 'Retard depuis l\'échéance'), h('option', { value: 'inv', selected: c.basis === 'inv' || null }, 'Âge depuis la date de facture'));
+  p.append(h('div', { class: 'card sec' }, h('h3', null, 'Règles de calcul'), h('div', { class: 'form' },
+    h('div', { class: 'field' }, h('label', { for: 'pr-basis' }, 'Base de la balance âgée'), basis),
+    F('pr-defTerms', 'Délai par défaut (jours)', c.defTerms, 'Loi 69-21 : 60 j sans accord', 'number'), F('pr-legalMax', 'Plafond légal convenu (jours)', c.legalMax, '120 j (180 j par décret sectoriel)', 'number'),
+    F('pr-td', 'Taux directeur BAM (%)', c.td, 'Mettre à jour si BAM modifie son taux', 'number'), F('pr-majo', 'Majoration par mois (%)', c.majo, '0,85 % par mois ou fraction supplémentaire', 'number'),
+    F('pr-lawStart', 'Factures soumises depuis le', c.lawStart, 'Selon votre tranche de CA', 'date'), F('pr-tva', 'Taux de TVA (%)', c.tva, 'Base HT des provisions', 'number'),
+    F('pr-minRelance', 'Seuil minimum de relance (MAD)', c.minRelance, '', 'number'), F('pr-n2', 'Relance ferme à partir de (j)', c.n2, '', 'number'), F('pr-n3', 'Mise en demeure à partir de (j)', c.n3, '', 'number'),
+    F('pr-contentieux', 'Contentieux à partir de (j)', c.contentieux, '', 'number'), F('pr-prov181', 'Provision > 180 j (%)', c.prov181, '', 'number'), F('pr-prov365', 'Provision > 365 j (%)', c.prov365, '', 'number'), F('pr-provDoubt', 'Provision douteux (%)', c.provDoubt, '', 'number'),
+    F('pp-clients', 'Comptes clients', c.p.clients), F('pp-douteux', 'Clients douteux', c.p.douteux), F('pp-effets', 'Effets à recevoir', c.p.effets), F('pp-avances', 'Avances clients', c.p.avances), F('pp-provision', 'Provisions clients', c.p.provision), F('pp-banque', 'Trésorerie (préfixes)', c.p.banque, 'Séparés par des virgules', 'text', 'span2'))));
+  const R = STATE.R; let ctab = null;
+  if (R) {
+    ctab = h('div', { class: 'tablewrap ctab' }, h('table', null, h('thead', null, h('tr', null, ['Compte', 'Client', 'Délai convenu (j)', 'Email', 'Interlocuteur', 'Ville'].map(x => h('th', { class: 'nosort' }, x)))),
+      h('tbody', null, R.clients.map(cl => { const m = STATE.meta.get(cl.acct) || {}; return h('tr', { 'data-acct': cl.acct }, h('td', { class: 'mono' }, cl.acct), h('td', null, cl.name),
+        h('td', null, h('input', { type: 'number', min: 0, max: 999, value: m.terms ?? '', placeholder: String(c.defTerms), 'data-k': 'terms', 'aria-label': 'Délai ' + cl.name })),
+        h('td', null, h('input', { type: 'email', value: m.email || '', 'data-k': 'email', 'aria-label': 'Email ' + cl.name })), h('td', null, h('input', { value: m.contact || '', 'data-k': 'contact', 'aria-label': 'Interlocuteur ' + cl.name })), h('td', null, h('input', { value: m.city || '', 'data-k': 'city', 'aria-label': 'Ville ' + cl.name }))); }))));
+    p.append(h('div', { class: 'card sec' }, h('h3', null, 'Conditions de paiement par client'), h('p', { class: 'sub' }, 'Pré-remplies depuis la feuille « Clients » du classeur si elle existe. Laisser vide = délai par défaut.'), ctab));
+  }
+  const apply = h('button', { class: 'btn btn-grad' }, 'Appliquer et recalculer'); const reset = h('button', { class: 'btn' }, 'Règles par défaut');
+  p.append(h('div', { class: 'form-actions' }, apply, reset));
+  apply.addEventListener('click', () => {
+    for (const k of Object.keys(EMPTY_CO)) co[k] = ($('#co-' + k).value || '').slice(0, 160);
+    c.basis = $('#pr-basis').value === 'inv' ? 'inv' : 'due';
+    for (const k of ['defTerms', 'legalMax', 'td', 'majo', 'tva', 'minRelance', 'n2', 'n3', 'contentieux', 'prov181', 'prov365', 'provDoubt']) { const v = parseFloat($('#pr-' + k).value); if (!(v >= 0 && v < 100000)) { toast('Valeur invalide : ' + k, 'err'); return; } c[k] = v; }
+    c.lawStart = /^\d{4}-\d{2}-\d{2}$/.test($('#pr-lawStart').value) ? $('#pr-lawStart').value : c.lawStart;
+    for (const k of Object.keys(c.p)) { const v = $('#pp-' + k).value.replace(/[^0-9,]/g, '').slice(0, 80); if (!v) { toast('Préfixe vide : ' + k, 'err'); return; } c.p[k] = v; }
+    if (ctab) ctab.querySelectorAll('tbody tr').forEach(tr => { const a = tr.getAttribute('data-acct'); const m = { ...(STATE.meta.get(a) || {}) }; tr.querySelectorAll('input').forEach(i => { const k = i.getAttribute('data-k'); if (k === 'terms') { const v = parseInt(i.value, 10); m.terms = v > 0 && v < 1000 ? v : null; } else m[k] = i.value.slice(0, 120); }); STATE.meta.set(a, m); });
+    if (STATE.gl) { run(); toast('Paramètres appliqués : analyses recalculées.', 'ok'); } else toast('Paramètres enregistrés.', 'ok');
+  });
+  reset.addEventListener('click', () => { const keep = STATE.cfg.asOf; STATE.cfg = JSON.parse(JSON.stringify(DEFAULT_CFG)); STATE.cfg.asOf = keep; renderParams(); if (STATE.gl) run(); });
+}
+
+function renderTabs(R) {
+  const nav = clear($('#tabs')); nav.classList.add('show');
+  const counts = { aged: R.clients.length, items: R.items.length, relances: R.toRelance.length, law: R.lateLegal.length + R.illegalTerms.length };
+  TABS.forEach(t => { const b = h('button', { class: 'tab', role: 'tab', id: 'tab-' + t.id, 'aria-controls': 'p-' + t.id, 'aria-selected': t.id === activeTab ? 'true' : 'false', tabindex: t.id === activeTab ? '0' : '-1' }, t.label,
+      counts[t.id] != null ? h('span', { class: 'count' + ((t.id === 'relances' || t.id === 'law') && counts[t.id] ? ' ko' : '') }, String(counts[t.id])) : null);
+    b.addEventListener('click', () => show(t.id));
+    b.addEventListener('keydown', ev => { const i = TABS.findIndex(x => x.id === t.id); if (ev.key === 'ArrowRight' || ev.key === 'ArrowLeft') { ev.preventDefault(); const n = TABS[(i + (ev.key === 'ArrowRight' ? 1 : TABS.length - 1)) % TABS.length]; show(n.id); $('#tab-' + n.id).focus(); } });
+    nav.append(b); });
+  show(activeTab);
+}
+function show(id) { activeTab = id; TABS.forEach(t => { const on = t.id === id; const b = $('#tab-' + t.id); if (b) { b.setAttribute('aria-selected', on ? 'true' : 'false'); b.tabIndex = on ? 0 : -1; } const pnl = $('#p-' + t.id); pnl.classList.toggle('show', on); pnl.setAttribute('aria-labelledby', 'tab-' + t.id); }); }
+function renderFileInfo(R) {
+  const fi = clear($('#fileinfo')); fi.classList.add('show'); const chip = (l, v) => h('span', { class: 'chip' }, l, h('b', null, v));
+  fi.append(chip('Fichier ', STATE.file.name), chip('Société ', STATE.co.name || '—'), chip('Période ', `${fmtD(STATE.gl.periodStart)} → ${fmtD(STATE.gl.periodEnd)}`), chip('Écritures ', STATE.gl.entries.length.toLocaleString('fr-FR')), chip('Clients ', String(R.clients.length)),
+    STATE.meta.size ? chip('Conditions clients ', STATE.meta.size + ' lues') : chip('Conditions clients ', 'délai par défaut'), STATE.file.demo ? badge('Démo – données fictives', 'info') : null,
+    h('span', { class: 'badge ' + (Math.abs(R.ecart) < 0.01 ? 'b-ok' : 'b-ko') }, Math.abs(R.ecart) < 0.01 ? 'Rapprochée avec la comptabilité' : 'Écart ' + fmt(R.ecart)));
+  $('#subtitle').textContent = `${STATE.co.name || 'Société'} · situation au ${fmtD(R.asOf)}`;
+}
+function run() {
+  const R = analyze(STATE.gl, STATE.meta, STATE.cfg); STATE.R = R;
+  $('#empty').hidden = true; $('#hero').classList.add('compact'); $('#drop-title').textContent = 'Charger un autre grand livre'; $('#hero-title').textContent = 'Balance âgée & relances';
+  $('#asof-box').hidden = false; $('#asof').value = R.asOf; $('#asof').min = STATE.gl.periodStart; $('#asof').max = STATE.gl.periodEnd;
+  renderFileInfo(R); renderDash(R); renderAged(R); renderItems(R); renderBehav(R); renderRelances(R); renderLaw(R); renderProv(R); renderParams(); renderTabs(R);
+  ['#btn-export', '#btn-print', '#btn-reset'].forEach(x => { $(x).disabled = false; });
+  announce(`Analyse terminée : ${R.clients.length} clients, encours ${fmt(R.encours)} MAD.`);
+}
+
+/* ============================ 7. Chargement ============================ */
+async function loadBuffer(buf, name, demo) {
+  const ext = (name.split('.').pop() || '').toLowerCase();
+  const pr = $('#progress'); pr.classList.add('show'); $('#progress-txt').textContent = `Lecture de « ${name} »…`;
+  try {
+    const sheets = ext === 'csv' ? readCsv(buf) : await readXlsx(buf);
+    $('#progress-txt').textContent = 'Construction de la balance âgée…'; await new Promise(r => setTimeout(r, 30));
+    const glSheet = sheets.find(sh => findHeader(sh.rows) >= 0); if (!glSheet) throw new Error('Aucune feuille de grand livre reconnue (colonnes Date, Débit, Crédit).');
+    const gl = parseGL(glSheet.rows);
+    const meta = parseClientsSheet(sheets.filter(sh => sh !== glSheet));
+    const cl = [...gl.accounts.keys()].filter(a => sw(a, STATE.cfg.p.clients) || sw(a, STATE.cfg.p.douteux));
+    if (!cl.length) throw new Error(`Aucun compte client (${STATE.cfg.p.clients}…) dans ce grand livre. Vérifiez l'export ou les préfixes dans Paramètres.`);
+    STATE.gl = gl; STATE.meta = meta; STATE.file = { name, sheet: glSheet.name, demo }; STATE.cfg.asOf = ''; STATE.levelOverride = new Map(); STATE.sel = new Set(); STATE.current = null;
+    if (demo) STATE.co = { ...DEMO_CO };
+    else if (!STATE.co.name || STATE.co.name === DEMO_CO.name) { STATE.co = { ...EMPTY_CO }; const guess = (name.split(/[_\-\s.]/).find(x => x && /^[A-Za-z]{3,}$/.test(x) && !/^(gl|grand|livre|au|du|xlsx|xlsm|csv|clients?)$/i.test(x)) || '').toUpperCase(); STATE.co.name = guess; }
+    activeTab = 'dash'; run(); toast(`Grand livre chargé : ${gl.entries.length} écritures, ${cl.length} comptes clients.`, 'ok');
+  } catch (err) { console.error(err); toast(err && err.message ? err.message : 'Lecture impossible.', 'err'); }
+  finally { pr.classList.remove('show'); $('#file').value = ''; }
+}
+async function handleFile(file) {
+  if (!file) return; const ext = (file.name.split('.').pop() || '').toLowerCase();
+  if (!['xlsx', 'xlsm', 'csv'].includes(ext)) { toast('Format non pris en charge : utilisez un fichier .xlsx ou .csv (un .xls doit être réenregistré en .xlsx).', 'err'); return; }
+  if (file.size > LIMITS.fileBytes) { toast('Fichier trop volumineux (25 Mo maximum).', 'err'); return; }
+  if (!file.size) { toast('Le fichier est vide.', 'err'); return; }
+  await loadBuffer(await file.arrayBuffer(), file.name, false);
+}
+async function loadDemo() {
+  try { const res = await fetch('Grand_livre_exemple.xlsx', { credentials: 'omit', cache: 'no-cache' }); if (!res.ok) throw new Error();
+    const buf = await res.arrayBuffer(); if (buf.byteLength > LIMITS.fileBytes) throw new Error(); await loadBuffer(buf, 'Grand_livre_exemple.xlsx', true); }
+  catch (_) { toast('Grand livre exemple introuvable : déposez « Grand_livre_exemple.xlsx » à côté de index.html (ou ouvrez la page via GitHub Pages).', 'err'); }
+}
+
+/* ============================ 8. Export Excel ============================ */
+const CRC = (() => { const t = new Uint32Array(256); for (let n = 0; n < 256; n++) { let c = n; for (let k = 0; k < 8; k++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1; t[n] = c >>> 0; } return t; })();
+function crc32(u8) { let c = 0xFFFFFFFF; for (let i = 0; i < u8.length; i++) c = CRC[(c ^ u8[i]) & 0xFF] ^ (c >>> 8); return (c ^ 0xFFFFFFFF) >>> 0; }
+function zipStore(files) {
+  const enc = new TextEncoder(); const parts = [], central = []; let off = 0;
+  for (const [name, content] of files) { const nb = enc.encode(name), data = enc.encode(content), crc = crc32(data); const lh = new DataView(new ArrayBuffer(30));
+    lh.setUint32(0, 0x04034b50, true); lh.setUint16(4, 20, true); lh.setUint16(6, 0x0800, true); lh.setUint32(14, crc, true); lh.setUint32(18, data.length, true); lh.setUint32(22, data.length, true); lh.setUint16(26, nb.length, true);
+    parts.push(new Uint8Array(lh.buffer), nb, data); const ch = new DataView(new ArrayBuffer(46));
+    ch.setUint32(0, 0x02014b50, true); ch.setUint16(4, 20, true); ch.setUint16(6, 20, true); ch.setUint16(8, 0x0800, true); ch.setUint32(16, crc, true); ch.setUint32(20, data.length, true); ch.setUint32(24, data.length, true); ch.setUint16(28, nb.length, true); ch.setUint32(42, off, true);
+    central.push(new Uint8Array(ch.buffer), nb); off += 30 + nb.length + data.length; }
+  const cd = central.reduce((t, x) => t + x.length, 0); const end = new DataView(new ArrayBuffer(22));
+  end.setUint32(0, 0x06054b50, true); end.setUint16(8, files.length, true); end.setUint16(10, files.length, true); end.setUint32(12, cd, true); end.setUint32(16, off, true);
+  return new Blob([...parts, ...central, new Uint8Array(end.buffer)], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+}
+function colName(i) { let r = ''; i++; while (i > 0) { const m = (i - 1) % 26; r = String.fromCharCode(65 + m) + r; i = Math.floor((i - 1) / 26); } return r; }
+const FILLS = ['10B981', '84CC16', 'EAB308', 'F97316', 'EF4444', 'DB2777', '9333EA', '4C1D95'];
+const STYLES = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><numFmts count="3"><numFmt numFmtId="164" formatCode="#,##0.00;(#,##0.00);&quot;-&quot;"/><numFmt numFmtId="165" formatCode="0.0%"/><numFmt numFmtId="166" formatCode="dd/mm/yyyy"/></numFmts>
+<fonts count="4"><font><sz val="10"/><name val="Arial"/></font><font><b/><sz val="10"/><color rgb="FFFFFFFF"/><name val="Arial"/></font><font><b/><sz val="10"/><name val="Arial"/></font><font><b/><sz val="14"/><color rgb="FF4F46E5"/><name val="Arial"/></font></fonts>
+<fills count="${3 + FILLS.length}"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FF4F46E5"/><bgColor indexed="64"/></patternFill></fill>${FILLS.map(c => `<fill><patternFill patternType="solid"><fgColor rgb="FF${c}"/><bgColor indexed="64"/></patternFill></fill>`).join('')}</fills>
+<borders count="2"><border><left/><right/><top/><bottom/><diagonal/></border><border><left style="thin"><color rgb="FFD9D9E3"/></left><right style="thin"><color rgb="FFD9D9E3"/></right><top style="thin"><color rgb="FFD9D9E3"/></top><bottom style="thin"><color rgb="FFD9D9E3"/></bottom><diagonal/></border></borders>
+<cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs>
+<cellXfs count="${9 + FILLS.length}"><xf numFmtId="0" fontId="0" fillId="0" borderId="1" applyBorder="1"/><xf numFmtId="0" fontId="1" fillId="2" borderId="1" applyFont="1" applyFill="1" applyBorder="1" applyAlignment="1"><alignment wrapText="1" vertical="center" horizontal="center"/></xf><xf numFmtId="164" fontId="0" fillId="0" borderId="1" applyNumberFormat="1" applyBorder="1"/><xf numFmtId="165" fontId="0" fillId="0" borderId="1" applyNumberFormat="1" applyBorder="1"/><xf numFmtId="166" fontId="0" fillId="0" borderId="1" applyNumberFormat="1" applyBorder="1"/><xf numFmtId="0" fontId="2" fillId="0" borderId="1" applyFont="1" applyBorder="1"/><xf numFmtId="164" fontId="2" fillId="0" borderId="1" applyNumberFormat="1" applyFont="1" applyBorder="1"/><xf numFmtId="0" fontId="3" fillId="0" borderId="0" applyFont="1"/><xf numFmtId="0" fontId="0" fillId="0" borderId="1" applyBorder="1" applyAlignment="1"><alignment wrapText="1" vertical="top"/></xf>${FILLS.map((c, i) => `<xf numFmtId="0" fontId="1" fillId="${3 + i}" borderId="1" applyFont="1" applyFill="1" applyBorder="1" applyAlignment="1"><alignment wrapText="1" vertical="center" horizontal="center"/></xf>`).join('')}</cellXfs>
+<cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles></styleSheet>`;
+function sheetXml(sh) {
+  const o = ['<?xml version="1.0" encoding="UTF-8" standalone="yes"?><worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">'];
+  o.push(sh.freeze ? `<sheetViews><sheetView workbookViewId="0" showGridLines="0"><pane ySplit="${sh.freeze}" topLeftCell="A${sh.freeze + 1}" activePane="bottomLeft" state="frozen"/></sheetView></sheetViews>` : '<sheetViews><sheetView workbookViewId="0" showGridLines="0"/></sheetViews>');
+  o.push('<cols>' + sh.widths.map((w, i) => `<col min="${i + 1}" max="${i + 1}" width="${w}" customWidth="1"/>`).join('') + '</cols><sheetData>');
+  sh.rows.forEach((row, ri) => { o.push(`<row r="${ri + 1}">`); row.forEach((cell, ci) => { if (cell == null) return; const c = typeof cell === 'object' ? cell : { v: cell }; const ref = colName(ci) + (ri + 1);
+    if (c.v == null || c.v === '') { if (c.s) o.push(`<c r="${ref}" s="${c.s}"/>`); return; }
+    if (c.date) { const serial = (isoToMs(c.v) - Date.UTC(1899, 11, 30)) / DAY; o.push(`<c r="${ref}" s="4"><v>${serial}</v></c>`); }
+    else if (typeof c.v === 'number') o.push(`<c r="${ref}" s="${c.s ?? (c.pct ? 3 : c.int ? 0 : 2)}"><v>${Number.isFinite(c.v) ? c.v : 0}</v></c>`);
+    else o.push(`<c r="${ref}" s="${c.s ?? 0}" t="inlineStr"><is><t xml:space="preserve">${xe(c.v)}</t></is></c>`); }); o.push('</row>'); });
+  o.push('</sheetData>'); if (sh.autoFilter) o.push(`<autoFilter ref="${sh.autoFilter}"/>`);
+  o.push('<pageMargins left="0.4" right="0.4" top="0.5" bottom="0.5" header="0.3" footer="0.3"/><pageSetup orientation="landscape" fitToWidth="1" fitToHeight="0"/></worksheet>'); return o.join('');
+}
+function buildWorkbook(sheets) {
+  const f = [];
+  f.push(['[Content_Types].xml', `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/>${sheets.map((x, i) => `<Override PartName="/xl/worksheets/sheet${i + 1}.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>`).join('')}</Types>`]);
+  f.push(['_rels/.rels', `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>`]);
+  f.push(['xl/workbook.xml', `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets>${sheets.map((x, i) => `<sheet name="${xe(x.name.slice(0, 31))}" sheetId="${i + 1}" r:id="rId${i + 1}"/>`).join('')}</sheets></workbook>`]);
+  f.push(['xl/_rels/workbook.xml.rels', `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">${sheets.map((x, i) => `<Relationship Id="rId${i + 1}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet${i + 1}.xml"/>`).join('')}<Relationship Id="rId${sheets.length + 1}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>`]);
+  f.push(['xl/styles.xml', STYLES]); sheets.forEach((x, i) => f.push([`xl/worksheets/sheet${i + 1}.xml`, sheetXml(x)])); return zipStore(f);
+}
+function tableSheet(name, title, sub, cols, rows, opts = {}) {
+  const out = [[{ v: title, s: 7 }], [sub], [], cols.map(c => ({ v: c.label, s: c.hs ?? 1 }))];
+  for (const r of rows) out.push(cols.map(c => { const v = c.get ? c.get(r) : r[c.key]; if (c.date) return v ? { v, date: true } : null; if (c.pct) return v == null ? null : { v, pct: true }; if (c.int) return v == null || v === '' ? null : { v, int: true }; if (c.num) return v == null || v === '' ? null : { v: r2(v) }; return { v: v ?? '', s: c.wrap ? 8 : 0 }; }));
+  if (opts.totals) out.push(cols.map((c, i) => i === 0 ? { v: 'TOTAL', s: 5 } : c.sum ? { v: r2(sum(rows, r => (c.get ? c.get(r) : r[c.key]) || 0)), s: 6 } : { v: '', s: 5 }));
+  return { name, rows: out, widths: cols.map(c => c.w || 14), freeze: 4, autoFilter: rows.length ? `A4:${colName(cols.length - 1)}${4 + rows.length}` : null };
+}
+function exportExcel() {
+  const R = STATE.R; if (!R) return; const co = STATE.co.name || 'Société'; const src = `Source : ${STATE.file.name} · situation au ${fmtD(R.asOf)} · généré le ${new Date().toLocaleDateString('fr-FR')}${STATE.file.demo ? ' · DONNÉES FICTIVES' : ''}`;
+  const dash = [[{ v: `${co} – Tableau de bord du recouvrement clients au ${fmtD(R.asOf)}`, s: 7 }], [src], [], [{ v: 'Indicateur', s: 1 }, { v: 'Valeur', s: 1 }, { v: 'Commentaire', s: 1 }],
+    ['Encours clients TTC (MAD)', { v: R.encours }, `${R.items.length} factures ouvertes`], ['Encours échu (MAD)', { v: R.overdue }, fmtP(R.encours ? R.overdue / R.encours : 0)], ['Encours non échu (MAD)', { v: R.notDue }, ''],
+    ['CA TTC de la période (MAD)', { v: R.salesAll }, `${R.days} jours`], ['DSO par épuisement (jours)', { v: Math.round(R.dsoCB), int: true }, 'Méthode count-back sur le CA mensuel'], ['DSO comptable (jours)', { v: Math.round(R.dsoSimple), int: true }, 'Encours / CA × jours'],
+    ['DSO optimal – BPDSO (jours)', { v: Math.round(R.bpdso), int: true }, 'Non échu / CA × jours'], ['Retard moyen – ADD (jours)', { v: Math.round(R.add), int: true }, 'DSO − BPDSO'], ['CEI', R.cei != null ? { v: R.cei, pct: true } : '–', 'Collection Effectiveness Index'],
+    ['Délai de paiement constaté (jours)', R.dmp != null ? { v: Math.round(R.dmp), int: true } : '–', 'Factures soldées de la période'], ['Factures payées dans les délais', R.onTime != null ? { v: R.onTime, pct: true } : '–', 'En montant'],
+    ['Concentration top 5', { v: R.top5, pct: true }, ''], ['Effets en portefeuille (MAD)', { v: R.effets }, ''], ['Avances clients (MAD)', { v: R.avances }, ''], ['Provision comptabilisée (MAD)', { v: R.provision }, ''], ['Provision suggérée HT (MAD)', { v: R.provSugg }, ''],
+    ['Amende 69-21 encourue par les clients (MAD)', { v: R.amende }, 'Estimation, au profit du Trésor'], ['Écart balance âgée / comptabilité', { v: R.ecart }, ''], [],
+    [{ v: 'Ancienneté', s: 1 }, { v: 'Montant', s: 1 }, { v: '%', s: 1 }], ...R.BK.map(b => [b.l, { v: R.B[b.k] }, { v: R.encours ? R.B[b.k] / R.encours : 0, pct: true }]), [],
+    [{ v: 'Mois', s: 1 }, { v: 'CA TTC', s: 1 }, { v: 'Encours fin de mois', s: 1 }, { v: 'DSO (j)', s: 1 }], ...R.series.map(x => [x.m, { v: x.sales }, { v: x.rec }, { v: Math.round(x.dso), int: true }])];
+  const sheets = [{ name: 'Tableau de bord', rows: dash, widths: [44, 20, 40, 12] }];
+  sheets.push(tableSheet('Balance âgée', `${co} – Balance âgée clients au ${fmtD(R.asOf)}`, src, [{ key: 'acct', label: 'Compte', w: 12 }, { key: 'name', label: 'Client', w: 30 }, { key: 'terms', label: 'Délai (j)', int: true, w: 9 }, { key: 'total', label: 'Encours', num: true, sum: true, w: 15 },
+    ...R.BK.map((b, i) => ({ key: b.k, label: b.l, num: true, sum: true, get: r => r.b[b.k], hs: 9 + i, w: 13 })), { key: 'unapplied', label: 'Crédits non affectés', num: true, sum: true, get: r => -r.unapplied }, { key: 'overdue', label: 'Échu', num: true, sum: true },
+    { key: 'pctOverdue', label: '% échu', pct: true, w: 9 }, { key: 'maxOd', label: 'Retard max (j)', int: true, w: 10 }, { key: 'score', label: 'Score', w: 7 }, { key: 'lvl', label: 'Relance', get: r => r.level ? LVL[r.level].l : 'À jour', w: 16 }, { key: 'email', label: 'Email', w: 30 }], R.clients, { totals: true }));
+  sheets.push(tableSheet('Factures ouvertes', `${co} – Factures ouvertes`, src, [{ key: 'acct', label: 'Compte', w: 12 }, { key: 'name', label: 'Client', w: 28 }, { key: 'ref', label: 'Facture', w: 14 }, { key: 'doc', label: 'Date facture', date: true, w: 12 }, { key: 'terms', label: 'Délai', int: true, w: 7 },
+    { key: 'due', label: 'Échéance', date: true, w: 12 }, { key: 'legalDue', label: 'Échéance légale', date: true, w: 12 }, { key: 'original', label: 'Montant initial', num: true, sum: true }, { key: 'fifo', label: 'Imputé FIFO', num: true, sum: true }, { key: 'amount', label: 'Reste dû', num: true, sum: true },
+    { key: 'age', label: 'Âge (j)', int: true, w: 8 }, { key: 'od', label: 'Retard (j)', int: true, w: 9 }, { key: 'bucketL', label: 'Tranche', w: 11 }, { key: 'lod', label: 'Dépassement légal (j)', int: true, get: r => Math.max(0, r.lod), w: 11 }, { key: 'amende', label: 'Amende client (est.)', num: true, sum: true }], R.items, { totals: true }));
+  sheets.push(tableSheet('Comportement', `${co} – Comportement de paiement`, src, [{ key: 'name', label: 'Client', w: 30 }, { key: 'score', label: 'Score', w: 7 }, { key: 'sales', label: 'CA TTC période', num: true, sum: true }, { key: 'total', label: 'Encours', num: true, sum: true },
+    { key: 'dso', label: 'DSO client (j)', int: true, get: r => r.sales > 0 ? Math.round(r.total / r.sales * R.days) : null }, { key: 'terms', label: 'Délai convenu (j)', int: true }, { key: 'dmp', label: 'Délai constaté (j)', int: true, get: r => r.dmp != null ? Math.round(r.dmp) : null },
+    { key: 'onTime', label: '% à temps', pct: true }, { key: 'wOd', label: 'Retard moyen encours (j)', int: true, get: r => Math.round(r.wOd) }, { key: 'lastPay', label: 'Dernier règlement', date: true, w: 12 }], R.clients, { totals: true }));
+  const lv = c => STATE.levelOverride.get(c.acct) || c.level;
+  sheets.push(tableSheet('Plan de relances', `${co} – Plan de relances au ${fmtD(R.asOf)}`, src, [{ key: 'name', label: 'Client', w: 30 }, { key: 'lvl', label: 'Niveau', get: c => `N${Math.min(lv(c), 3)} – ${LVL[lv(c)].l}`, w: 24 }, { key: 'overdue', label: 'Montant échu', num: true, sum: true },
+    { key: 'n', label: 'Factures échues', int: true, get: c => c.items.filter(i => i.od > 0).length, w: 9 }, { key: 'maxOd', label: 'Retard max (j)', int: true, w: 10 }, { key: 'amende', label: 'Amende client (est.)', num: true, sum: true }, { key: 'email', label: 'Email', w: 32 }, { key: 'contact', label: 'Interlocuteur', w: 18 },
+    { key: 'ref', label: 'Référence lettre', get: c => `REL-N${Math.min(lv(c), 3)}-${c.acct}-${STATE.letterDate.replace(/-/g, '')}`, w: 26 }, { key: 'dt', label: 'Date d\'envoi', get: () => '', w: 12 }, { key: 'rep', label: 'Suite donnée', get: () => '', w: 26 }], R.toRelance, { totals: true }));
+  sheets.push(tableSheet('Conformité 69-21', `${co} – Factures hors délai légal`, src + ` · taux directeur ${R.cfg.td} % + ${R.cfg.majo} %/mois`, [{ key: 'name', label: 'Client', w: 28 }, { key: 'ref', label: 'Facture', w: 14 }, { key: 'doc', label: 'Date facture', date: true, w: 12 }, { key: 'legalDue', label: 'Échéance légale', date: true, w: 12 },
+    { key: 'amount', label: 'Reste dû', num: true, sum: true }, { key: 'lod', label: 'Dépassement (j)', int: true, w: 11 }, { key: 'rate', label: 'Taux amende (%)', num: true, w: 11 }, { key: 'amende', label: 'Amende client (est.)', num: true, sum: true }], R.lateLegal, { totals: true }));
+  sheets.push(tableSheet('Provisions', `${co} – Risques et provisions`, src, [{ key: 'name', label: 'Client', w: 30 }, { key: 'score', label: 'Score', w: 7 }, { key: 'total', label: 'Encours TTC', num: true, sum: true }, { key: 'o180', label: 'Échu > 180 j', num: true, sum: true, get: r => sum(r.items.filter(i => i.od > 180), i => i.amount) },
+    { key: 'maxOd', label: 'Retard max (j)', int: true }, { key: 'provSugg', label: 'Provision suggérée HT', num: true, sum: true }], R.clients.filter(x => x.provSugg > 0 || x.doubt), { totals: true }));
+  const blob = buildWorkbook(sheets); const url = URL.createObjectURL(blob);
+  const a = h('a', { href: url, download: `${co.replace(/[^\w-]+/g, '_')}_Balance_agee_${R.asOf}.xlsx` }); document.body.append(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 4000);
+  toast('Classeur Excel généré (7 feuilles).', 'ok');
+}
+
+/* ============================ 9. Événements ============================ */
+const drop = $('#drop'), input = $('#file');
+input.addEventListener('change', () => handleFile(input.files && input.files[0]));
+['dragenter', 'dragover'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.add('drag'); }));
+['dragleave', 'drop'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.remove('drag'); }));
+drop.addEventListener('drop', e => handleFile(e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]));
+window.addEventListener('dragover', e => e.preventDefault()); window.addEventListener('drop', e => e.preventDefault());
+$('#btn-demo').addEventListener('click', loadDemo);
+$('#asof').addEventListener('change', () => { const v = $('#asof').value; if (!STATE.gl || !/^\d{4}-\d{2}-\d{2}$/.test(v)) return; STATE.cfg.asOf = v < STATE.gl.periodStart ? STATE.gl.periodStart : v > STATE.gl.periodEnd ? STATE.gl.periodEnd : v; run(); });
+$('#btn-export').addEventListener('click', () => { try { exportExcel(); } catch (e) { console.error(e); toast('Export impossible : ' + e.message, 'err'); } });
+$('#btn-print').addEventListener('click', () => { document.body.classList.remove('printing-letters'); window.print(); });
+window.addEventListener('afterprint', () => { document.body.classList.remove('printing-letters'); clear($('#print-area')); });
+$('#btn-reset').addEventListener('click', () => {
+  STATE = { gl: null, sheets: null, meta: new Map(), R: null, file: null, cfg: JSON.parse(JSON.stringify(DEFAULT_CFG)), co: { ...EMPTY_CO }, levelOverride: new Map(), sel: new Set(), current: null, letterDate: todayIso() };
+  TABS.forEach(t => { clear($('#p-' + t.id)).classList.remove('show'); }); clear($('#tabs')).classList.remove('show'); clear($('#fileinfo')).classList.remove('show');
+  $('#empty').hidden = false; $('#hero').classList.remove('compact'); $('#drop-title').textContent = 'Déposez votre grand livre ici'; $('#hero-title').textContent = 'Pilotez vos encaissements clients en un coup d\'œil'; $('#asof-box').hidden = true;
+  $('#subtitle').textContent = 'Recouvrement · DSO · Loi 69-21 sur les délais de paiement'; ['#btn-export', '#btn-print', '#btn-reset'].forEach(x => { $(x).disabled = true; }); renderParams();
+  toast('Données effacées de la mémoire du navigateur.', 'ok');
+});
+const root = document.documentElement; const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+let theme = null; try { theme = localStorage.getItem('ba-theme'); } catch (_) {}
+root.setAttribute('data-theme', theme || (prefersDark ? 'dark' : 'light'));
+$('#btn-theme').addEventListener('click', () => { const t = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; root.setAttribute('data-theme', t); try { localStorage.setItem('ba-theme', t); } catch (_) {} });
+renderParams();
+})();
+</script>
+</body>
+</html>
